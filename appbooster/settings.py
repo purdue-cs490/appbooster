@@ -56,10 +56,19 @@ WSGI_APPLICATION = 'appbooster.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
+if os.environ.get('ENVIRONMENT', 'dev') == 'dev':
+    DATABASE_ENGINE = 'django.db.backends.sqlite3',
+else:
+    DATABASE_ENGINE = 'django.db.backends.mysql'
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': DATABASE_ENGINE,
+        'NAME': 'appdb',
+        'USER': 'appbooster',
+        'PASSWORD': 'appbooster',
+        'HOST': '',
+        'PORT': '',
     }
 }
 
