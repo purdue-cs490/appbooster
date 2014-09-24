@@ -15,7 +15,7 @@ AppBooster Django web console
 
 	export ENVIRONMENT=dev
 	./manage.py runserver
-	
+
 ### Production
 
 	export ENVIRONMENT=prod
