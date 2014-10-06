@@ -10,8 +10,9 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from os import path
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
+PROJECT_DIR = BASE_DIR
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -69,7 +70,7 @@ DATABASES = {
         'PASSWORD': 'appbooster',
         'HOST': '',
         'PORT': '',
-    }
+    },
 }
 
 # Internationalization
@@ -90,4 +91,35 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+STATICFILES_DIRS = (
+    path.join(PROJECT_DIR, 'static'),
+)
+
+# List of finder classes that know how to find static files in
+# various locations.
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+)
+
+TEMPLATE_DIRS = (
+    path.abspath(path.join(PROJECT_DIR, "templates")),
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+   # ...
+   'django.core.context_processors.request',
+   'django.contrib.auth.context_processors.auth',
+   # ...
+)
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'purdueseats@gmail.com'
+EMAIL_HOST_PASSWORD = 'purduecourse!'
+EMAIL_PORT = 587
+
+FIXTURE_DIRS = (
+    path.join(PROJECT_DIR, 'fixtures'),
+)

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block css %}
+<link href="{% static "css/contact.css" %}" rel="stylesheet">
+{% endblock %}
+
+{% block active_home %}class="active"{% endblock %}
+
+{% block content %}
+<div class="unit">
+    <legend><h1 class="pull-center">
+           Welcome! 
+    </h1></legend>
+    <div class="row-fliud">
+        <div class="span6">
+            <p>Here is some introduction</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
