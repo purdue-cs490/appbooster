@@ -1,0 +1,48 @@
+table {
+    width: 100%;
+}
+
+td, th {
+    text-align: center !important;
+}
+
+.inner-navbar {
+    margin-bottom: 40px;
+}
+
+.add-btn {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.alert {
+    width:93%;
+    text-align: center;
+}
+
+.test {
+    width: 50px;
+    height: 50px;
+    background-color: #FFF;
+}
+
+.if-btn-group {
+    position: fixed;
+    right: 0px;
+    bottom: 40%;
+    border: 0px;
+    text-align: right;
+}
+
+.if-btn {
+    margin-bottom: 20px;
+}
+
+.iframe {
+    position: fixed;
+    left: 100%;
+    top: 0;
+    width: 80%;
+    height: 100%;
+    z-index: 1044;
+}

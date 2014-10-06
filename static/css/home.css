@@ -1,0 +1,84 @@
+html, body {
+    height:100%; 
+    background:#4E5359 url(../images/bg_universal.png) repeat 0 0;
+    color:#666; 
+}
+
+h1.welcome {
+    margin-bottom: 30px;
+}
+
+.dec-pic {
+    float: left;
+}
+
+#demo1 {
+    width: auto;
+    height: 380px;
+    background: url(../images/demo1.png);
+    background-repeat:no-repeat;
+    background-size: 100% 300px;
+}
+
+#demo2 {
+    width: auto;
+    height: 380px;
+    background: url(../images/demo2.png);
+    background-repeat:no-repeat;
+    background-size: 100% 380px;
+}
+
+#demo3 {
+    width: auto;
+    height: 380px;
+    background: url(../images/demo3.png);
+    background-repeat:no-repeat;
+    background-position: 0px -50px;
+    background-size: 100% 430px;
+}
+
+#demo4 {
+    width: auto;
+    height: 380px;
+    background: url(../images/demo4.png);
+    background-repeat:no-repeat;
+    background-position: 0px -50px;
+    background-size: 100% 430px;
+}
+
+.description {
+    text-align: right; 
+}
+
+.banner {
+    margin-bottom: 50px;
+    text-align: center;
+    background: rgb(102,102,102); /* Old browsers */
+
+    background: -moz-linear-gradient(top,  rgba(102,102,102,1) 1%, rgba(17,17,17,1) 70%, rgba(102,102,102,1) 100%); /* FF3.6+ */
+
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,rgba(102,102,102,1)), color-stop(70%,rgba(17,17,17,1)), color-stop(100%,rgba(102,102,102,1))); /* Chrome,Safari4+ */
+
+    background: -webkit-linear-gradient(top,  rgba(102,102,102,1) 1%,rgba(17,17,17,1) 70%,rgba(102,102,102,1) 100%); /* Chrome10+,Safari5.1+ */
+
+    background: -o-linear-gradient(top,  rgba(102,102,102,1) 1%,rgba(17,17,17,1) 70%,rgba(102,102,102,1) 100%); /* Opera 11.10+ */
+
+    background: -ms-linear-gradient(top,  rgba(102,102,102,1) 1%,rgba(17,17,17,1) 70%,rgba(102,102,102,1) 100%); /* IE10+ */
+
+    background: linear-gradient(to bottom,  rgba(102,102,102,1) 1%,rgba(17,17,17,1) 70%,rgba(102,102,102,1) 100%); /* W3C */
+
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#666666', endColorstr='#666666',GradientType=0 ); /* IE6-9 */
+}
+
+.banner-btn {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.accordion-body li {
+    list-style-type: circle;
+}
+
+.features {
+    color: #f5f5f5;
+}
