@@ -1,3 +1,5 @@
 ENV/
 *.pyc
 appdb
+/static/
+/media/
