@@ -124,3 +124,6 @@ EMAIL_PORT = 587
 FIXTURE_DIRS = (
     path.join(PROJECT_DIR, 'fixtures'),
 )
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/dashboard/'

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block css %}
+    <link href="{% static "css/dashboard.css" %}" rel="stylesheet">
+{% endblock %}
+
+{% block active_home %}class="active"{% endblock %}
+
+{% block content %}
+<div class="unit">
+    <legend><h1 class="pull-center">
+           Welcome, {{ request.user.get_full_name }}! 
+    </h1></legend>
+    <div class="row-fliud">
+        <div class="span6">
+            <p>Here are some statistics</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

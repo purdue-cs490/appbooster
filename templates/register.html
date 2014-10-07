@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="unit">
+    <legend><h1>Register</h1></legend>
+    <form class="form-horizontal" name="register" action="." method="POST">{% csrf_token %}
+        {% if error %}
+            <div class="alert alert-error">{{ error }}</div>
+        {% endif %}
+        <div class="control-group">
+            <label class="control-label" for="inputFirstname">
+                First Name: 
+            </label>
+            <div class="controls">
+                <input id="inputFirstname" type="text" name="firstname">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputLastname">
+                Last Name: 
+            </label>
+            <div class="controls">
+                <input id="inputLastname" type="text" name="lastname">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputEmail">
+                Email: 
+            </label>
+            <div class="controls">
+                <input id="inputEmail" type="text" name="email">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputPassword">
+                Password:
+            </label>
+            <div class="controls">
+                <input id="inputPassword" type="password" name="password">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputRepassword">
+                Retype Password:
+            </label>
+            <div class="controls">
+                <input id="inputRepassword" type="password" name="repassword">
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <input class='btn' type="submit" value="Register">
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
