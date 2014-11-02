@@ -1,0 +1,16 @@
+server {
+    listen   8000 default_server deferred;
+
+    charset utf-8;
+
+    root /var/www/nginx-default;
+
+    large_client_header_buffers 4 128k;
+
+    location / {
+        include uwsgi_params;
+        uwsgi_pass {{uwsgi_pass}};
+        access_log {{access_log}};
+        error_log {{error_log}};
+    }
+}

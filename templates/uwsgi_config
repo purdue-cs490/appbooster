@@ -1,0 +1,13 @@
+[uwsgi]
+socket = {{socket}}
+chdir = {{chdir}}
+virtualenv = {{virtualenv}}
+logto = {{logto}}
+buffer-size = 8192
+processes = 4
+threads = 32
+reload-on-rss = 512
+evil-reload-on-rss = 2048
+module = wsgi
+log-reopen = True
+plugins = python
