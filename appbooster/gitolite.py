@@ -21,7 +21,7 @@ def init():
     if not os.path.exists(GITOLITE_CONF_FILE):
         raise RuntimeError("Cannot find gitolite.conf")
 
-    with open(GITOLITE_CONF_FILE) as gitolite_conf:
+    with open(GITOLITE_CONF_FILE, 'rw') as gitolite_conf:
         gitolite_conf_content = gitolite_conf.read()
 
         if gitolite_conf_content != GITOLITE_CONF_DEFAULT:
