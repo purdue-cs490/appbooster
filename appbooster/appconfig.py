@@ -76,6 +76,6 @@ def write_uwsgi_config(app_name):
             uwsgi_config_file.write(uwsgi_config)
 
 
-if __name__ == '__name__':
+if __name__ == '__main__':
     write_nginx_config('appbooster-test')
     write_uwsgi_config('appbooster-test')
