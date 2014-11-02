@@ -16,13 +16,17 @@ GITOLITE_CONF_REPO_TEMPLATE = """repo %s
 """
 
 
+class GitoliteException(Exception):
+    pass
+
+
 def init():
     if not os.path.isdir(ADMIN_DIR):
         # TODO: clone repo to ADMIN_DIR
         pass
 
     if not os.path.exists(GITOLITE_CONF_FILE):
-        raise RuntimeError("Cannot find gitolite.conf")
+        raise GitoliteException("Cannot find gitolite.conf")
 
     with open(GITOLITE_CONF_FILE, 'w+') as gitolite_conf:
         gitolite_conf_content = gitolite_conf.read()
@@ -31,11 +35,16 @@ def init():
             gitolite_conf.write(GITOLITE_CONF_DEFAULT)
 
 
-def add_usr(user, public_key):
+def add_user(user, public_key):
     # TODO: define user object model
 
-    user_key_filename = user + '.pub'
+    user_name = user
+
+    user_key_filename = user_name + '.pub'
     user_key_path = os.path.join(KEY_DIR, user_key_filename)
+
+    if os.path.exists(user_key_path):
+        raise GitoliteException("%s user key file already exists" % user_key_filename)
 
     with open(user_key_path, 'wb') as user_key_file:
         user_key_file.write(public_key)
@@ -64,6 +73,36 @@ def add_repo(repo, users):
 
     with open(repo_conf_path, 'wb') as repo_conf_file:
         repo_conf_file.write(repo_conf)
+
+
+def rm_user(user):
+    # TODO: define user object model
+
+    user_name = user
+
+    user_key_filename = user_name + '.pub'
+    user_key_path = os.path.join(KEY_DIR, user_key_filename)
+
+    if os.path.exists(user_key_path):
+        os.remove(user_key_path)
+        return True
+    else:
+        return False
+
+
+def rm_repo(repo):
+    # TODO: define repo object model
+
+    repo_name = repo
+
+    repo_conf_filename = repo_name + '.conf'
+    repo_conf_path = os.path.join(CONF_DIR, repo_conf_filename)
+
+    if os.path.exists(repo_conf_path):
+        os.remove(repo_conf_path)
+        return True
+    else:
+        return False
 
 
 if __name__ == '__main__':
