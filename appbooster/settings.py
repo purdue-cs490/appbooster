@@ -115,6 +115,11 @@ TEMPLATE_CONTEXT_PROCESSORS = (
    # ...
 )
 
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+)
+
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'purdueseats@gmail.com'
