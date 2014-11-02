@@ -15,8 +15,32 @@ GITOLITE_CONF_REPO_TEMPLATE = """repo %s
 %s
 """
 
+COMMENT_ADD_USER_TEMPLATE = "Added user %s."
+COMMENT_ADD_REPO_TEMPLATE = "Added repo %s for %s."
+COMMENT_REMOVE_USER_TEMPLATE = "Removed user %s."
+COMMENT_REMOVE_REPO_TEMPLATE = "Removed repo %s."
+
 
 class GitoliteException(Exception):
+    pass
+
+
+def _commit(comment):
+    """Git commit.
+    """
+    # TODO: waiting on git module
+    pass
+
+
+def commit():
+    """Commit changes. Call this method after any of the operations.
+
+    Git push.
+    """
+    # TODO: waiting on git module
+
+    git_dir = os.path.join(ADMIN_DIR, '.git')
+
     pass
 
 
@@ -49,6 +73,9 @@ def add_user(user, public_key):
     with open(user_key_path, 'wb') as user_key_file:
         user_key_file.write(public_key)
 
+    comment = COMMENT_ADD_USER_TEMPLATE % user_name
+    _commit(comment)
+
 
 def add_repo(repo, users):
     # TODO: define repo object model
@@ -60,19 +87,22 @@ def add_repo(repo, users):
     repo_conf_path = os.path.join(CONF_DIR, repo_conf_filename)
 
     if isinstance(users, str):
-        repo_users = [users]
+        repo_user_names = [users]
     else:
-        repo_users = users
+        repo_user_names = users
 
-    repo_users_str_buf = []
-    for repo_user in repo_users:
-        repo_users_str_buf.append('    RW      =   %s' % repo_user)
-    repo_users_str = ''.join(repo_users_str_buf)
+    repo_user_names_str_buf = []
+    for repo_user_name in repo_user_names:
+        repo_user_names_str_buf.append('    RW      =   %s' % repo_user_name)
+    repo_user_names_str = ''.join(repo_user_names_str_buf)
 
-    repo_conf = GITOLITE_CONF_REPO_TEMPLATE % (repo_name, repo_users_str)
+    repo_conf = GITOLITE_CONF_REPO_TEMPLATE % (repo_name, repo_user_names_str)
 
     with open(repo_conf_path, 'wb') as repo_conf_file:
         repo_conf_file.write(repo_conf)
+
+    comment = COMMENT_ADD_REPO_TEMPLATE % (repo_name, ', '.join(repo_user_names))
+    _commit(comment)
 
 
 def rm_user(user):
@@ -83,11 +113,13 @@ def rm_user(user):
     user_key_filename = user_name + '.pub'
     user_key_path = os.path.join(KEY_DIR, user_key_filename)
 
-    if os.path.exists(user_key_path):
-        os.remove(user_key_path)
-        return True
-    else:
-        return False
+    if not os.path.exists(user_key_path):
+        raise GitoliteException("%s user key file cannot be found" % user_key_filename)
+
+    os.remove(user_key_path)
+
+    comment = COMMENT_REMOVE_USER_TEMPLATE % user_name
+    _commit(comment)
 
 
 def rm_repo(repo):
@@ -98,11 +130,13 @@ def rm_repo(repo):
     repo_conf_filename = repo_name + '.conf'
     repo_conf_path = os.path.join(CONF_DIR, repo_conf_filename)
 
-    if os.path.exists(repo_conf_path):
-        os.remove(repo_conf_path)
-        return True
-    else:
-        return False
+    if not os.path.exists(repo_conf_path):
+        raise GitoliteException("%s repo conf file cannot be found" % repo_name)
+
+    os.remove(repo_conf_path)
+
+    comment = COMMENT_REMOVE_REPO_TEMPLATE % repo_name
+    _commit(comment)
 
 
 if __name__ == '__main__':
