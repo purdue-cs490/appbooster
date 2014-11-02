@@ -18,13 +18,13 @@ def write_nginx_config(app_name):
     app_path = os.path.join(APP_DIR, app_name)
     nginx_config_path = os.path.join(NGINX_CONFIG_DIR, app_name)
 
-    # if not os.path.isdir(control_path):
-    #     os.mkdir(control_path)
-    #     os.chown(control_path, -1, 'appdcn')
+    if not os.path.isdir(control_path):
+        os.mkdir(control_path)
+        os.chown(control_path, -1, 'appdcn')
 
-    # if not os.path.isdir(app_path):
-    #     os.mkdir(app_path)
-    #     os.chown(app_path, -1, 'appdcn')
+    if not os.path.isdir(app_path):
+        os.mkdir(app_path)
+        os.chown(app_path, -1, 'appdcn')
 
     config = {
         'uwsgi_pass': 'unix://%s' % os.path.join(control_path, socket_name),
@@ -51,7 +51,16 @@ def write_uwsgi_config(app_name):
     app_log_path = os.path.join(APP_APP_DIR, log_name)
 
     control_path = os.path.join(CONTROL_DIR, app_name)
+    app_path = os.path.join(APP_DIR, app_name)
     uwsgi_config_path = os.path.join(control_path, uwsgi_config_name)
+
+    if not os.path.isdir(control_path):
+        os.mkdir(control_path)
+        os.chown(control_path, -1, 'appdcn')
+
+    if not os.path.isdir(app_path):
+        os.mkdir(app_path)
+        os.chown(app_path, -1, 'appdcn')
 
     config = {
         'socket': app_socket_path,
