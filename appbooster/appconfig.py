@@ -1,3 +1,4 @@
+import grp
 import os
 
 from django.template import loader
@@ -7,6 +8,7 @@ APP_DIR = '/u/apps'
 APP_CONTROL_DIR = '/u/control'
 APP_APP_DIR = '/u/app'
 NGINX_CONFIG_DIR = '/etc/nginx/site-enabled'
+APPDCN_GID = grp.getgrnam('appdcn').gr_gid
 
 
 def write_nginx_config(app_name):
@@ -20,11 +22,11 @@ def write_nginx_config(app_name):
 
     if not os.path.isdir(control_path):
         os.mkdir(control_path)
-        os.chown(control_path, -1, 'appdcn')
+        os.chown(control_path, -1, APPDCN_GID)
 
     if not os.path.isdir(app_path):
         os.mkdir(app_path)
-        os.chown(app_path, -1, 'appdcn')
+        os.chown(app_path, -1, APPDCN_GID)
 
     config = {
         'uwsgi_pass': 'unix://%s' % os.path.join(control_path, socket_name),
@@ -56,11 +58,11 @@ def write_uwsgi_config(app_name):
 
     if not os.path.isdir(control_path):
         os.mkdir(control_path)
-        os.chown(control_path, -1, 'appdcn')
+        os.chown(control_path, -1, APPDCN_GID)
 
     if not os.path.isdir(app_path):
         os.mkdir(app_path)
-        os.chown(app_path, -1, 'appdcn')
+        os.chown(app_path, -1, APPDCN_GID)
 
     config = {
         'socket': app_socket_path,
