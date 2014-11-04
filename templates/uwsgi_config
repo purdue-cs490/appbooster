@@ -1,5 +1,6 @@
 [uwsgi]
 socket = {{socket}}
+chmod-socket = 777
 chdir = {{chdir}}
 virtualenv = {{virtualenv}}
 logto = {{logto}}
