@@ -1,5 +1,6 @@
 import grp
 import os
+import shutil
 
 from django.template import loader
 
@@ -76,6 +77,24 @@ def write_uwsgi_config(app_name):
     with open(uwsgi_config_path, 'w+') as uwsgi_config_file:
         if uwsgi_config_file.read() != uwsgi_config:
             uwsgi_config_file.write(uwsgi_config)
+
+
+def remove_nginx_config(app_name):
+    nginx_config_path = os.path.join(NGINX_CONFIG_DIR, app_name)
+
+    if os.path.exists(nginx_config_path):
+        os.remove(nginx_config_path)
+
+
+def remove_uwsgi_config(app_name):
+    control_path = os.path.join(CONTROL_DIR, app_name)
+    app_path = os.path.join(APP_DIR, app_name)
+
+    if os.path.isdir(control_path):
+        shutil.rmtree(control_path)
+
+    if os.path.isdir(app_path):
+        shutil.rmtree(app_path)
 
 
 if __name__ == '__main__':
