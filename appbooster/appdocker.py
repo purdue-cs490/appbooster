@@ -18,14 +18,6 @@ class AppDocker(object):
         self.client = Client()
 
     def create_run(self, app_name):
-        host_control_path = os.path.join(settings.HOST_CONTROL_DIR, app_name)
-        host_app_path = os.path.join(settings.HOST_APP_DIR, app_name)
-
-        attach_volumes = [
-            host_control_path + ':' + settings.CONTAINER_CONTROL_DIR,
-            host_app_path + ':' + settings.CONTAINER_APP_DIR,
-        ]
-
         container_name = CONTAINER_NAME_PREFIX + app_name
 
         create_args = {
@@ -33,7 +25,6 @@ class AppDocker(object):
             'tty': False,
             'detach': True,
             'mem_limit': settings.CONTAINER_MEM_LIMIT,
-            'volumes': attach_volumes,
             'name': container_name,
         }
 
@@ -43,6 +34,25 @@ class AppDocker(object):
         if not container_id:
             raise AppDockerException("Failed to create container")
 
-        self.client.start(container=container_id)
+        host_control_path = os.path.join(settings.HOST_CONTROL_DIR, app_name)
+        host_app_path = os.path.join(settings.HOST_APP_DIR, app_name)
+
+        bind_volumes = {
+            host_control_path: {
+                'bind': settings.CONTAINER_CONTROL_DIR,
+                'ro': False,
+            },
+            host_app_path: {
+                'bind': settings.CONTAINER_APP_DIR,
+                'ro': False,
+            },
+        }
+
+        start_args = {
+            'container': container_id,
+            'binds': bind_volumes,
+        }
+
+        self.client.start(**start_args)
 
         return container_id
