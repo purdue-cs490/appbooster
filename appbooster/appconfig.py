@@ -2,12 +2,9 @@ import grp
 import os
 import shutil
 
+from django.conf import settings
 from django.template import loader
 
-CONTROL_DIR = '/u/controls'
-APP_DIR = '/u/apps'
-APP_CONTROL_DIR = '/u/control'
-APP_APP_DIR = '/u/app'
 NGINX_CONFIG_DIR = '/etc/nginx/sites-enabled'
 APPDCN_GID = grp.getgrnam('appdcn').gr_gid
 
@@ -17,8 +14,8 @@ def write_nginx_config(app_name):
     nginx_access_name = app_name + '_nginx_access'
     nginx_error_name = app_name + '_nginx_error'
 
-    control_path = os.path.join(CONTROL_DIR, app_name)
-    app_path = os.path.join(APP_DIR, app_name)
+    control_path = os.path.join(settings.HOST_CONTROL_DIR, app_name)
+    app_path = os.path.join(settings.HOST_APP_DIR, app_name)
     nginx_config_path = os.path.join(NGINX_CONFIG_DIR, app_name)
 
     if not os.path.isdir(control_path):
@@ -48,13 +45,13 @@ def write_uwsgi_config(app_name):
     log_name = app_name + '_uwsgi.log'
     uwsgi_config_name = app_name + '.ini'
 
-    app_socket_path = os.path.join(APP_CONTROL_DIR, socket_name)
-    app_chdir_path = os.path.join(APP_APP_DIR, app_name)
-    app_virtualenv_path = os.path.join(APP_APP_DIR, virtualenv_name)
-    app_log_path = os.path.join(APP_APP_DIR, log_name)
+    app_socket_path = os.path.join(settings.CONTAINER_CONTROL_DIR, socket_name)
+    app_chdir_path = os.path.join(settings.CONTAINER_APP_DIR, app_name)
+    app_virtualenv_path = os.path.join(settings.CONTAINER_APP_DIR, virtualenv_name)
+    app_log_path = os.path.join(settings.CONTAINER_APP_DIR, log_name)
 
-    control_path = os.path.join(CONTROL_DIR, app_name)
-    app_path = os.path.join(APP_DIR, app_name)
+    control_path = os.path.join(settings.HOST_CONTROL_DIR, app_name)
+    app_path = os.path.join(settings.HOST_APP_DIR, app_name)
     uwsgi_config_path = os.path.join(control_path, uwsgi_config_name)
 
     if not os.path.isdir(control_path):
@@ -87,8 +84,8 @@ def remove_nginx_config(app_name):
 
 
 def remove_uwsgi_config(app_name):
-    control_path = os.path.join(CONTROL_DIR, app_name)
-    app_path = os.path.join(APP_DIR, app_name)
+    control_path = os.path.join(settings.HOST_CONTROL_DIR, app_name)
+    app_path = os.path.join(settings.HOST_APP_DIR, app_name)
 
     if os.path.isdir(control_path):
         shutil.rmtree(control_path)

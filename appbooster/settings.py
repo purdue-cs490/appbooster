@@ -132,3 +132,10 @@ FIXTURE_DIRS = (
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/dashboard/'
+
+CONTAINER_MEM_LIMIT = 536870912     # 512M
+
+HOST_CONTROL_DIR = '/u/controls'
+HOST_APP_DIR = '/u/apps'
+CONTAINER_CONTROL_DIR = '/u/control'
+CONTAINER_APP_DIR = '/u/app'
