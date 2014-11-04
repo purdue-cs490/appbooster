@@ -7,7 +7,7 @@ CONTROL_DIR = '/u/controls'
 APP_DIR = '/u/apps'
 APP_CONTROL_DIR = '/u/control'
 APP_APP_DIR = '/u/app'
-NGINX_CONFIG_DIR = '/etc/nginx/site-enabled'
+NGINX_CONFIG_DIR = '/etc/nginx/sites-enabled'
 APPDCN_GID = grp.getgrnam('appdcn').gr_gid
 
 
