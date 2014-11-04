@@ -9,6 +9,11 @@ NGINX_CONFIG_DIR = '/etc/nginx/sites-enabled'
 APPDCN_GID = grp.getgrnam('appdcn').gr_gid
 
 
+def touch(path):
+    with open(path, 'a'):
+        os.utime(path, None)
+
+
 def write_nginx_config(app_name):
     socket_name = app_name + '.socket'
     nginx_access_name = app_name + '_nginx_access'
@@ -18,6 +23,9 @@ def write_nginx_config(app_name):
     app_path = os.path.join(settings.HOST_APP_DIR, app_name)
     nginx_config_path = os.path.join(NGINX_CONFIG_DIR, app_name)
 
+    nginx_access_path = os.path.join(app_path, nginx_access_name)
+    nginx_error_path = os.path.join(app_path, nginx_error_name)
+
     if not os.path.isdir(control_path):
         os.mkdir(control_path)
         os.chown(control_path, -1, APPDCN_GID)
@@ -26,10 +34,15 @@ def write_nginx_config(app_name):
         os.mkdir(app_path)
         os.chown(app_path, -1, APPDCN_GID)
 
+    touch(nginx_access_path)
+    os.chown(nginx_access_path, -1, APPDCN_GID)
+    touch(nginx_error_path)
+    os.chown(nginx_error_path, -1, APPDCN_GID)
+
     config = {
         'uwsgi_pass': 'unix://%s' % os.path.join(control_path, socket_name),
-        'access_log': os.path.join(app_path, nginx_access_name),
-        'error_log': os.path.join(app_path, nginx_error_name),
+        'access_log': nginx_access_path,
+        'error_log': nginx_error_path,
     }
 
     nginx_config = loader.render_to_string('nginx_config', config)
