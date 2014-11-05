@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'appbooster',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -122,8 +123,8 @@ TEMPLATE_LOADERS = (
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'purdueseats@gmail.com'
-EMAIL_HOST_PASSWORD = 'purduecourse!'
+EMAIL_HOST_USER = 'puappbooster@gmail.com'
+EMAIL_HOST_PASSWORD = 'puappbooster!'
 EMAIL_PORT = 587
 
 FIXTURE_DIRS = (

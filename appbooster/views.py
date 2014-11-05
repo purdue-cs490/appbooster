@@ -7,6 +7,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
+from django.core.mail import send_mail
+from django.core.urlresolvers import reverse
+
+from appbooster.models import AppUser
 
 # Create your views here.
 
@@ -69,21 +73,30 @@ def register(request):
         if repassword != password:
             return render(request, 'register.html', {'error': 'Password not same'})
         try:
-            validate_email(email)
-        except ValidationError:
-            return render(request, 'register.html', {'error': 'Please use correct email'})
+            verify_email(email)
+        except ValidationError as e:
+            return render(request, 'register.html', {'error': e.message})
         if User.objects.filter(username=username).exists():
             return render(request, 'register.html', {'error': 'Username Exists'})
         elif User.objects.filter(email=email).exists():
             return render(request, 'register.html', {'error': 'Email Exists'})
         else:
-            user = User.objects.create_user(
-                username,
+            my_user = AppUser.objects.create_user(
                 email,
                 password,
-                first_name=firstname,
-                last_name=lastname,
+                firstname=firstname,
+                lastname=lastname,
             )
+            verify_url = reverse('verify', kwargs={'verifycode':my_user.verifycode})
+            msg = '''
+                Hi, {0} {1}:
+                    Thank you for using AppBooster. Here is your verification url:
+                        {2}
+                
+                Best,
+                AppBooster
+            '''.format(firstname, lastname, request.build_absolute_uri(verify_url),)
+            send_mail('Purdue AppBooster Verification', msg, 'purdueseats@gmail.com', [email,])
             user = authenticate(username=username, password=password)
             _login(request, user)
             respond = redirect('dashboard')
@@ -102,5 +115,26 @@ def profile(request):
     return render(request, 'index.html')
 
 
+def verify(request, verifycode=None):
+    my_user = None
+    try:
+        my_user = AppUser.objects.get(verifycode=verifycode)
+    except:
+        pass
+    if my_user:
+        my_user.user.is_active = True
+        my_user.user.save()
+    return redirect('dashboard')
+
+
 def not_completed(request):
     return render(request, 'index.html')
+
+
+def verify_email(email):
+    validate_email(email)
+    tokens = email.split('@')
+    for token in tokens[1:]:
+        if token.find('purdue') != -1:
+            return
+    raise ValidationError('Not purdue account')

@@ -21,5 +21,7 @@ urlpatterns = patterns('appbooster.views',
         name = 'profile'),
     url(r'^not_completed/$', 'not_completed', 
         name = 'not_completed'),
+    url(r'^verify/(?P<verifycode>\w+)/$', 'verify', 
+        name = 'verify'),
     url(r'^admin/', include(admin.site.urls)),
 )

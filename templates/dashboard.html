@@ -13,9 +13,15 @@
            Welcome, {{ request.user.get_full_name }}! 
     </h1></legend>
     <div class="row-fliud">
+        {% if user.is_active %}
         <div class="span6">
             <p>Here are some statistics</p>
         </div>
+        {% else %}
+        <div class="span6">
+            <p>You haven't active your account</p>
+        </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
