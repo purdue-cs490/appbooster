@@ -5,7 +5,7 @@
     <link href="{% static "css/dashboard.css" %}" rel="stylesheet">
 {% endblock %}
 
-{% block active_home %}class="active"{% endblock %}
+{% block active_dashboard %}class="active"{% endblock %}
 
 {% block content %}
 <div class="unit">
@@ -15,7 +15,10 @@
     <div class="row-fliud">
         {% if user.is_active %}
         <div class="span6">
-            <p>Here are some statistics</p>
+            <p>Here are some apps you created.</p>
+        </div>
+        <div class="span6">
+            <button type="button">Create new app!</button>
         </div>
         {% else %}
         <div class="span6">
