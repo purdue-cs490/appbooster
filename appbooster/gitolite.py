@@ -1,7 +1,11 @@
 import os
 
+import gitmodule
+
+
 HOME = os.path.expanduser('~')
 GITOLITE_ADMIN_DIR = os.path.join(HOME, 'gitolite-admin')
+GITOLITE_ADMIN_GIT = os.path.join(GITOLITE_ADMIN_DIR, '.git')
 KEY_DIR = os.path.join(GITOLITE_ADMIN_DIR, 'keydir')
 CONF_DIR = os.path.join(GITOLITE_ADMIN_DIR, 'conf')
 GITOLITE_CONF_FILE = os.path.join(CONF_DIR, 'gitolite.conf')
@@ -28,8 +32,7 @@ class GitoliteException(Exception):
 def _commit(comment):
     """Git commit.
     """
-    # TODO: waiting on git module
-    pass
+    gitmodule.repoCommit(GITOLITE_ADMIN_GIT, comment)
 
 
 def commit():
@@ -37,17 +40,12 @@ def commit():
 
     Git push.
     """
-    # TODO: waiting on git module
-
-    git_dir = os.path.join(GITOLITE_ADMIN_DIR, '.git')
-
-    pass
+    gitmodule.repoPush(GITOLITE_ADMIN_GIT)
 
 
 def init():
     if not os.path.isdir(GITOLITE_ADMIN_DIR):
-        # TODO: clone repo to GITOLITE_ADMIN_DIR
-        pass
+        gitmodule.cloneRepo('ssh://git@localhost:22/gitolite-admin.git', GITOLITE_ADMIN_DIR)
 
     if not os.path.exists(GITOLITE_CONF_FILE):
         raise GitoliteException("Cannot find gitolite.conf")
