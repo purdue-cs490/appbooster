@@ -7,6 +7,8 @@ from docker import Client
 CONTAINER_IMAGE = 'appbooster-container'
 CONTAINER_NAME_PREFIX = 'APPD_'
 
+STOP_TIMEOUT = 20   # 20 secs
+
 
 class AppDockerException(Exception):
     pass
@@ -17,7 +19,7 @@ class AppDocker(object):
     def __init__(self):
         self.client = Client()
 
-    def create_run(self, app_name):
+    def create_start(self, app_name):
         container_name = CONTAINER_NAME_PREFIX + app_name
 
         create_args = {
@@ -56,3 +58,18 @@ class AppDocker(object):
         self.client.start(**start_args)
 
         return container_id
+
+    def stop(self, container_id):
+        stop_args = {
+            'container': container_id,
+            'timeout': STOP_TIMEOUT,
+        }
+
+        self.client.stop(**stop_args)
+
+    def start(self, container_id):
+        start_args = {
+            'container': container_id,
+        }
+
+        self.client.start(**start_args)
