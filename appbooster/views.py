@@ -64,6 +64,7 @@ def register(request):
         firstname = param.get('firstname')
         lastname = param.get('lastname')
         email = param.get('email')
+        ssh = param.get('ssh')
         password = param.get('password')
         repassword = param.get('repassword')
         if not username or not firstname or not lastname:
@@ -86,6 +87,7 @@ def register(request):
                 password,
                 firstname=firstname,
                 lastname=lastname,
+                ssh=ssh,
             )
             verify_url = reverse('verify', kwargs={'verifycode':my_user.verifycode})
             msg = '''

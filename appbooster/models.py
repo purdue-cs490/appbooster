@@ -9,6 +9,7 @@ class AppUserManager(models.Manager):
         password,
         firstname,
         lastname,
+        ssh,
     ):
         user = Auth_User.objects.create_user(
             email,
@@ -21,6 +22,7 @@ class AppUserManager(models.Manager):
         user.save()
         appuser = self.create(
             user=user,
+            public_ssh=ssh,
         )
         appuser.generate_code()
         return appuser
@@ -28,6 +30,7 @@ class AppUserManager(models.Manager):
 # Create your models here.
 class AppUser(models.Model):
     user = models.OneToOneField(Auth_User, primary_key=True)
+    public_ssh = models.CharField(max_length=1024)
     verifycode = models.CharField(max_length=20, unique=True)
 
     objects = AppUserManager()
