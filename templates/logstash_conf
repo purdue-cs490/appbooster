@@ -1,0 +1,17 @@
+input {
+  file{
+    path => "/u/apps/{{app_name}}/{{app_name}}_nginx_access"
+    start_position => beginning
+  }
+}
+
+filter {
+  grok {
+    match => { "message" => "%{IP:clientip} - - \[%{HTTPDATE:timestamp}\] \"%{WORD:verb} %{URIPATHPARAM:request} HTTP/%{NUMBER:httpversion}\" %{NUMBER:response} %{NUMBER:bytes} %{QS:referrer} %{QS:agent} "}
+  }
+}
+
+output {
+  redis {
+  }
+}
