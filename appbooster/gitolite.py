@@ -91,7 +91,7 @@ def add_repo(repo, users):
     repo_user_names_str_buf = []
     for repo_user_name in repo_user_names:
         repo_user_names_str_buf.append('    RW      =   %s' % repo_user_name)
-    repo_user_names_str = ''.join(repo_user_names_str_buf)
+    repo_user_names_str = '\n'.join(repo_user_names_str_buf)
 
     repo_conf = GITOLITE_CONF_REPO_TEMPLATE % (repo_name, repo_user_names_str)
 
