@@ -139,3 +139,6 @@ def rm_repo(repo):
 
 if __name__ == '__main__':
     init()
+    add_user('testuser1', "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCoFZB+2bnmkRJPwXWVJkTNdF2eWRgkrdGBqefHV8rzLlF6X1u1KzFzk5+fnXNJAG0O/Sa0ANzrwwV9nj2OyrvoDYCI1DpyTY1hpTXnsq0Qhq71nOLYJeuK3zZVgfKKE2v93t8821GFXs819eGKGWUrywpEsQqFZvYDMtWPyT3E5tY+qc0lZB0N7aDxynyUW8to8v8pl2p8U3qVsmRgCwo6kYUj4s8xeMal1R1RPTkNnZko+s5DiwKYuySFRUQlY5iCREhet6k9PD1pfAlj6URY2/o5C0eifCMRRZaqP6nnVfz9qphjOi8OEcK85ulIcycOQJW27ifypUgu5NKrvnzL testuser1@kevrmbp.kevxu.net")
+    add_repo('testrepo1', 'testuser1')
+    commit()
