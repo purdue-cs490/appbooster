@@ -82,11 +82,7 @@ def add_repo(repo, users):
 
     repo_conf_filename = repo_name + '.conf'
     repo_conf_path = os.path.join(CONF_DIR, repo_conf_filename)
-
-    if isinstance(users, str):
-        repo_user_names = [users]
-    else:
-        repo_user_names = users
+    repo_user_names = users
 
     repo_user_names_str_buf = []
     for repo_user_name in repo_user_names:
