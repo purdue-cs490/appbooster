@@ -141,3 +141,6 @@ HOST_CONTROL_DIR = '/u/controls'
 HOST_APP_DIR = '/u/apps'
 CONTAINER_CONTROL_DIR = '/u/control'
 CONTAINER_APP_DIR = '/u/app'
+
+HOST_NAME = "mc18.cs.purdue.edu"
+HOST_SSH_PORT = 1822

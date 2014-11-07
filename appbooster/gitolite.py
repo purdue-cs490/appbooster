@@ -1,5 +1,7 @@
 import os
 
+from django.conf import settings
+
 import gitmodule
 
 
@@ -23,6 +25,8 @@ COMMENT_ADD_USER_TEMPLATE = "Added user %s."
 COMMENT_ADD_REPO_TEMPLATE = "Added repo %s for %s."
 COMMENT_REMOVE_USER_TEMPLATE = "Removed user %s."
 COMMENT_REMOVE_REPO_TEMPLATE = "Removed repo %s."
+
+GIT_URL_TEMPLATE = "ssh://git@%s:%d/%s.git"
 
 
 class GitoliteException(Exception):
@@ -58,8 +62,6 @@ def init():
 
 
 def add_user(user, public_key):
-    # TODO: define user object model
-
     user_name = user
 
     user_key_filename = user_name + '.pub'
@@ -76,9 +78,6 @@ def add_user(user, public_key):
 
 
 def add_repo(repo, users):
-    # TODO: define repo object model
-    # TODO: define user object model
-
     repo_name = repo
 
     repo_conf_filename = repo_name + '.conf'
@@ -102,10 +101,12 @@ def add_repo(repo, users):
     comment = COMMENT_ADD_REPO_TEMPLATE % (repo_name, ', '.join(repo_user_names))
     _commit(comment)
 
+    git_url = GIT_URL_TEMPLATE % (settings.HOST_NAME, settings.HOST_SSH_PORT, repo_name)
+
+    return git_url
+
 
 def rm_user(user):
-    # TODO: define user object model
-
     user_name = user
 
     user_key_filename = user_name + '.pub'
@@ -121,8 +122,6 @@ def rm_user(user):
 
 
 def rm_repo(repo):
-    # TODO: define repo object model
-
     repo_name = repo
 
     repo_conf_filename = repo_name + '.conf'
