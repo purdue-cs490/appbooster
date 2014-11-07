@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User as Auth_User
 import random, string
 
+import gitolite
+
 class AppUserManager(models.Manager):
     def create_user(
         self,
@@ -11,6 +13,8 @@ class AppUserManager(models.Manager):
         lastname,
         ssh,
     ):
+        gitolite.add_user(email, ssh)
+        gitolite.commit()
         user = Auth_User.objects.create_user(
             email,
             email,

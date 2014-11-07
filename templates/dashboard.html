@@ -12,14 +12,17 @@
     <legend><h1 class="pull-center">
            Welcome, {{ request.user.get_full_name }}! 
     </h1></legend>
-    <div class="row-fliud">
+    <div>
         {% if user.is_active %}
-        <div class="span6">
+        <div>
             <p>Here are some apps you created.</p>
+            <ul>
+                {% for app in request.user.application_set %}
+                    <li>app.name</li>
+                {% endfor %}
+            </ul>
         </div>
-        <div class="span6">
             <button type="button">Create new app!</button>
-        </div>
         {% else %}
         <div class="span6">
             <p>You haven't active your account</p>

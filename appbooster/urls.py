@@ -24,4 +24,5 @@ urlpatterns = patterns('appbooster.views',
     url(r'^verify/(?P<verifycode>\w+)/$', 'verify', 
         name = 'verify'),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^app/', include('application.urls')),
 )
