@@ -50,4 +50,7 @@ def deploy_app(request):
     appconfig.write_uwsgi_config(app.name)
     appconfig.write_nginx_config(app.name)
 
+    appconfig.reload_nginx()
+    app_docker.start(app.container_id)
+
     return HttpResponse('OK', status=200)

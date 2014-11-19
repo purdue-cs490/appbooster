@@ -5,6 +5,8 @@ import shutil
 from django.conf import settings
 from django.template import loader
 
+import command
+
 NGINX_CONFIG_DIR = '/etc/nginx/sites-enabled'
 APPDCN_GID = grp.getgrnam('appdcn').gr_gid
 
@@ -108,6 +110,10 @@ def remove_uwsgi_config(app_name):
 
     if os.path.isdir(app_path):
         shutil.rmtree(app_path)
+
+
+def reload_nginx():
+    return command.run_sudo_script("/etc/init.d/nginx reload")
 
 
 if __name__ == '__main__':
