@@ -1,5 +1,6 @@
 import os
 
+from django.contrib.auth import login_required
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -9,6 +10,7 @@ from appbooster.appdocker import AppDocker
 from application.models import Application
 
 
+@login_required
 def create(request):
     if request.method == 'GET':
         return render(request, 'application/create.html', {'error': ''})
@@ -19,6 +21,7 @@ def create(request):
         return redirect('dashboard')
 
 
+@login_required
 def deploy_app(request):
     if request.method != 'POST':
         return HttpResponseBadRequest()
