@@ -3,6 +3,7 @@ import os
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
 
 from appbooster import appconfig
 from appbooster import gitmodule
@@ -21,6 +22,7 @@ def create(request):
         return redirect('dashboard')
 
 
+@csrf_exempt
 def deploy_app(request):
     if request.method != 'POST':
         return HttpResponseBadRequest()
