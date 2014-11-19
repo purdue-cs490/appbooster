@@ -21,7 +21,6 @@ def create(request):
         return redirect('dashboard')
 
 
-@login_required
 def deploy_app(request):
     if request.method != 'POST':
         return HttpResponseBadRequest()
