@@ -1,5 +1,5 @@
 server {
-    listen   8000 default_server deferred;
+    listen   {{port}} default_server deferred;
 
     charset utf-8;
 

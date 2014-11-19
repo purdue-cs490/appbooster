@@ -19,7 +19,8 @@ class AppDocker(object):
     def __init__(self):
         self.client = Client()
 
-    def create_start(self, app_name):
+    def create_start(self, app):
+        app_name = app.name
         container_name = CONTAINER_NAME_PREFIX + app_name
 
         create_args = {
@@ -36,8 +37,8 @@ class AppDocker(object):
         if not container_id:
             raise AppDockerException("Failed to create container")
 
-        host_control_path = os.path.join(settings.HOST_CONTROL_DIR, app_name)
-        host_app_path = os.path.join(settings.HOST_APP_DIR, app_name)
+        host_control_path = app.host_control_path()
+        host_app_path = app.host_app_path()
 
         bind_volumes = {
             host_control_path: {
@@ -59,7 +60,8 @@ class AppDocker(object):
 
         return container_id
 
-    def stop(self, container_id):
+    def stop(self, app):
+        container_id = app.container_id
         stop_args = {
             'container': container_id,
             'timeout': STOP_TIMEOUT,
@@ -67,7 +69,8 @@ class AppDocker(object):
 
         self.client.stop(**stop_args)
 
-    def start(self, container_id):
+    def start(self, app):
+        container_id = app.container_id
         start_args = {
             'container': container_id,
         }

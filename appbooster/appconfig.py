@@ -7,7 +7,6 @@ from django.template import loader
 
 import command
 
-NGINX_CONFIG_DIR = '/etc/nginx/sites-enabled'
 APPDCN_GID = grp.getgrnam('appdcn').gr_gid
 
 
@@ -16,9 +15,9 @@ def touch(path):
         os.utime(path, None)
 
 
-def init_directories(app_name):
-    control_path = os.path.join(settings.HOST_CONTROL_DIR, app_name)
-    app_path = os.path.join(settings.HOST_APP_DIR, app_name)
+def init_directories(app):
+    control_path = app.host_control_path()
+    app_path = app.host_app_path()
 
     if not os.path.isdir(control_path):
         os.mkdir(control_path)
@@ -30,14 +29,16 @@ def init_directories(app_name):
     os.chown(app_path, -1, APPDCN_GID)
 
 
-def write_nginx_config(app_name):
+def write_nginx_config(app):
+    app_name = app.name
+
     socket_name = app_name + '.socket'
     nginx_access_name = app_name + '_nginx_access'
     nginx_error_name = app_name + '_nginx_error'
 
-    control_path = os.path.join(settings.HOST_CONTROL_DIR, app_name)
-    app_path = os.path.join(settings.HOST_APP_DIR, app_name)
-    nginx_config_path = os.path.join(NGINX_CONFIG_DIR, app_name)
+    control_path = app.host_control_path()
+    app_path = app.host_app_path()
+    nginx_config_path = app.host_nginx_config_path()
 
     nginx_access_path = os.path.join(app_path, nginx_access_name)
     nginx_error_path = os.path.join(app_path, nginx_error_name)
@@ -53,6 +54,7 @@ def write_nginx_config(app_name):
         'uwsgi_pass': 'unix://%s' % os.path.join(control_path, socket_name),
         'access_log': nginx_access_path,
         'error_log': nginx_error_path,
+        'port': app.port_num,
     }
 
     nginx_config = loader.render_to_string('nginx_config', config)
@@ -62,7 +64,9 @@ def write_nginx_config(app_name):
             nginx_config_file.write(nginx_config)
 
 
-def write_uwsgi_config(app_name):
+def write_uwsgi_config(app):
+    app_name = app.name
+
     socket_name = app_name + '.socket'
     virtualenv_name = app_name + '.virtualenv'
     log_name = app_name + '_uwsgi.log'
@@ -73,7 +77,7 @@ def write_uwsgi_config(app_name):
     app_virtualenv_path = os.path.join(settings.CONTAINER_APP_DIR, virtualenv_name)
     app_log_path = os.path.join(settings.CONTAINER_APP_DIR, log_name)
 
-    control_path = os.path.join(settings.HOST_CONTROL_DIR, app_name)
+    control_path = app.host_control_path()
     uwsgi_config_path = os.path.join(control_path, uwsgi_config_name)
 
     init_directories(app_name)
@@ -83,6 +87,7 @@ def write_uwsgi_config(app_name):
         'chdir': app_chdir_path,
         'virtualenv': app_virtualenv_path,
         'logto': app_log_path,
+        'module_name': app.wsgi_module,
     }
 
     uwsgi_config = loader.render_to_string('uwsgi_config', config)
@@ -94,14 +99,16 @@ def write_uwsgi_config(app_name):
     touch(uwsgi_config_path)
 
 
-def remove_nginx_config(app_name):
-    nginx_config_path = os.path.join(NGINX_CONFIG_DIR, app_name)
+def remove_nginx_config(app):
+    nginx_config_path = app.host_nginx_config_path()
 
     if os.path.exists(nginx_config_path):
         os.remove(nginx_config_path)
 
 
-def remove_uwsgi_config(app_name):
+def remove_uwsgi_config(app):
+    app_name = app.name
+
     control_path = os.path.join(settings.HOST_CONTROL_DIR, app_name)
     app_path = os.path.join(settings.HOST_APP_DIR, app_name)
 
