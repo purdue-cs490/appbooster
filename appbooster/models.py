@@ -1,10 +1,14 @@
+import random
+import string
+
 from django.db import models
 from django.contrib.auth.models import User as Auth_User
-import random, string
 
 import gitolite
 
+
 class AppUserManager(models.Manager):
+
     def create_user(
         self,
         email,
@@ -13,6 +17,7 @@ class AppUserManager(models.Manager):
         lastname,
         ssh,
     ):
+        gitolite.init()
         gitolite.add_user(email, ssh)
         gitolite.commit()
         user = Auth_User.objects.create_user(
@@ -31,8 +36,10 @@ class AppUserManager(models.Manager):
         appuser.generate_code()
         return appuser
 
+
 # Create your models here.
 class AppUser(models.Model):
+
     user = models.OneToOneField(Auth_User, primary_key=True)
     public_ssh = models.CharField(max_length=1024)
     verifycode = models.CharField(max_length=20, unique=True)

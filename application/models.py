@@ -1,23 +1,26 @@
 from django.db import models
-from appbooster.models import AppUser
 
+from appbooster.models import AppUser
 from appbooster import gitolite
 
 PORT_START = 18000
 PORT_END = 18099
 
+
 class ApplicationManager(models.Manager):
+
     def create_app(
         self,
         name,
         user,
     ):
-        git_repo = gitolite.add_repo(name, [user.email,])
+        git_repo = gitolite.add_repo(name, [user.email])
+        gitolite.init()
         gitolite.commit()
         app = self.create(
             name=name,
             apptype='python',
-            port_num=get_port_num(),
+            port_num=self.get_port_num(),
             wsgi_module='wsgi',
             git_repo=git_repo,
         )
@@ -25,7 +28,7 @@ class ApplicationManager(models.Manager):
         return app
 
     def get_port_num(self):
-        for port in xrange(PORT_START,PORT_END+1):
+        for port in xrange(PORT_START, PORT_END+1):
             if not Application.objects.filter(port_num=port).exists():
                 return port
         return 0
