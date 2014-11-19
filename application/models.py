@@ -1,7 +1,7 @@
 from django.db import models
 
-from appbooster.models import AppUser
 from appbooster import gitolite
+from appbooster.models import AppUser
 
 PORT_START = 18000
 PORT_END = 18099

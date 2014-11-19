@@ -1,8 +1,8 @@
 import random
 import string
 
-from django.db import models
 from django.contrib.auth.models import User as Auth_User
+from django.db import models
 
 import gitolite
 
