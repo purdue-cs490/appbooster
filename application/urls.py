@@ -5,6 +5,5 @@ urlpatterns = patterns('application.views',
     # Examples:
     # url(r'^$', 'appbooster.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-    url(r'^create/$', 'create', 
-        name = 'application_create'),
+    url(r'^create/$', 'create', name='application_create'),
 )

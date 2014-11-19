@@ -1,10 +1,8 @@
+from django.conf import settings
 from django.db import models
 
 from appbooster import gitolite
 from appbooster.models import AppUser
-
-PORT_START = 18000
-PORT_END = 18099
 
 
 class ApplicationManager(models.Manager):
@@ -28,7 +26,7 @@ class ApplicationManager(models.Manager):
         return app
 
     def get_port_num(self):
-        for port in xrange(PORT_START, PORT_END+1):
+        for port in xrange(settings.APP_PORT_START, settings.APP_PORT_END+1):
             if not Application.objects.filter(port_num=port).exists():
                 return port
         return 0
