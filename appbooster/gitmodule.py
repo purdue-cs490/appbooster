@@ -27,10 +27,15 @@ def repoCommit(repoAddress, message):
     repo.git.commit(m=message)
 
 
-def repoPull(repoAddress):
+def repoPull(repoAddress, new_commit=None):
     repo = Repo(repoAddress)
     repo.git.fetch()
-    repo.git.reset('--hard')
+
+    args = ['--hard']
+    if new_commit:
+        args.append(new_commit)
+
+    repo.git.reset(*args)
 
 
 def repoPush(repoAddress):

@@ -14,6 +14,20 @@ def touch(path):
         os.utime(path, None)
 
 
+def init_directories(app_name):
+    control_path = os.path.join(settings.HOST_CONTROL_DIR, app_name)
+    app_path = os.path.join(settings.HOST_APP_DIR, app_name)
+
+    if not os.path.isdir(control_path):
+        os.mkdir(control_path)
+
+    if not os.path.isdir(app_path):
+        os.mkdir(app_path)
+
+    os.chown(control_path, -1, APPDCN_GID)
+    os.chown(app_path, -1, APPDCN_GID)
+
+
 def write_nginx_config(app_name):
     socket_name = app_name + '.socket'
     nginx_access_name = app_name + '_nginx_access'
@@ -26,13 +40,7 @@ def write_nginx_config(app_name):
     nginx_access_path = os.path.join(app_path, nginx_access_name)
     nginx_error_path = os.path.join(app_path, nginx_error_name)
 
-    if not os.path.isdir(control_path):
-        os.mkdir(control_path)
-        os.chown(control_path, -1, APPDCN_GID)
-
-    if not os.path.isdir(app_path):
-        os.mkdir(app_path)
-        os.chown(app_path, -1, APPDCN_GID)
+    init_directories(app_name)
 
     touch(nginx_access_path)
     os.chown(nginx_access_path, -1, APPDCN_GID)
@@ -64,16 +72,9 @@ def write_uwsgi_config(app_name):
     app_log_path = os.path.join(settings.CONTAINER_APP_DIR, log_name)
 
     control_path = os.path.join(settings.HOST_CONTROL_DIR, app_name)
-    app_path = os.path.join(settings.HOST_APP_DIR, app_name)
     uwsgi_config_path = os.path.join(control_path, uwsgi_config_name)
 
-    if not os.path.isdir(control_path):
-        os.mkdir(control_path)
-        os.chown(control_path, -1, APPDCN_GID)
-
-    if not os.path.isdir(app_path):
-        os.mkdir(app_path)
-        os.chown(app_path, -1, APPDCN_GID)
+    init_directories(app_name)
 
     config = {
         'socket': app_socket_path,
@@ -87,6 +88,8 @@ def write_uwsgi_config(app_name):
     with open(uwsgi_config_path, 'w+') as uwsgi_config_file:
         if uwsgi_config_file.read() != uwsgi_config:
             uwsgi_config_file.write(uwsgi_config)
+
+    touch(uwsgi_config_path)
 
 
 def remove_nginx_config(app_name):

@@ -1,3 +1,5 @@
+import os
+
 from django.conf import settings
 from django.db import models
 
@@ -35,7 +37,7 @@ class ApplicationManager(models.Manager):
 # Create your models here.
 class Application(models.Model):
     # TODO
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     appusers = models.ManyToManyField(AppUser)
     container_id = models.CharField(max_length=100)
     apptype = models.CharField(max_length=30)
@@ -44,3 +46,6 @@ class Application(models.Model):
     git_repo = models.CharField(max_length=256)
 
     objects = ApplicationManager()
+
+    def local_repo_path(self):
+        return os.path.join(settings.HOST_APP_DIR, self.name, self.name)
