@@ -100,12 +100,13 @@ def write_uwsgi_config(app):
     app_name = app.name
 
     socket_name = app_name + '.socket'
+    virtualenv_name = app_name + '.virtualenv'
     log_name = app_name + '_uwsgi.log'
     uwsgi_config_name = app_name + '.ini'
 
     app_socket_path = os.path.join(settings.CONTAINER_CONTROL_DIR, socket_name)
-    app_chdir_path = app.local_repo_path
-    app_virtualenv_path = app.local_virtualenv_path
+    app_chdir_path = os.path.join(settings.CONTAINER_APP_DIR, app_name)
+    app_virtualenv_path = os.path.join(settings.CONTAINER_APP_DIR, virtualenv_name)
     app_log_path = os.path.join(settings.CONTAINER_APP_DIR, log_name)
 
     control_path = app.host_control_path
