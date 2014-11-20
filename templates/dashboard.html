@@ -17,8 +17,10 @@
         <div>
             <p>Here are some apps you created.</p>
             <ul>
-                {% for app in request.user.application_set %}
-                    <li>app.name</li>
+                {% for app in request.user.appuser.application_set.all %}
+                <li>
+                    <a href={% url 'application_app' app.pk %}>{{ app.name }}</a>
+                </li>
                 {% endfor %}
             </ul>
         </div>
