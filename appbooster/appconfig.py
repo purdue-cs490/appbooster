@@ -120,7 +120,7 @@ def remove_uwsgi_config(app):
 
 
 def reload_nginx():
-    return command.run_sudo_script("/etc/init.d/nginx reload")
+    return command.run("sudo /etc/init.d/nginx reload")
 
 
 if __name__ == '__main__':
