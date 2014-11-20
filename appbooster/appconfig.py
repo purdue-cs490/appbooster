@@ -43,7 +43,7 @@ def write_nginx_config(app):
     nginx_access_path = os.path.join(app_path, nginx_access_name)
     nginx_error_path = os.path.join(app_path, nginx_error_name)
 
-    init_directories(app_name)
+    init_directories(app)
 
     touch(nginx_access_path)
     os.chown(nginx_access_path, -1, APPDCN_GID)
@@ -80,7 +80,7 @@ def write_uwsgi_config(app):
     control_path = app.host_control_path
     uwsgi_config_path = os.path.join(control_path, uwsgi_config_name)
 
-    init_directories(app_name)
+    init_directories(app)
 
     config = {
         'socket': app_socket_path,
