@@ -26,7 +26,9 @@ def init_directories(app):
         os.mkdir(app_path)
 
     os.chown(control_path, -1, APPDCN_GID)
+    os.chmod(control_path, 0775)
     os.chown(app_path, -1, APPDCN_GID)
+    os.chmod(app_path, 0775)
 
 
 def write_nginx_config(app):
