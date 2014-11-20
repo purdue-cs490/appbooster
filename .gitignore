@@ -3,3 +3,4 @@ ENV/
 appdb
 *.sublime-*
 .DS_Store
+.*.swp

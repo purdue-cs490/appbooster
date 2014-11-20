@@ -8,7 +8,6 @@ import gitolite
 
 
 class AppUserManager(models.Manager):
-
     def create_user(
         self,
         email,
@@ -39,7 +38,6 @@ class AppUserManager(models.Manager):
 
 # Create your models here.
 class AppUser(models.Model):
-
     user = models.OneToOneField(Auth_User, primary_key=True)
     public_ssh = models.CharField(max_length=1024)
     verifycode = models.CharField(max_length=20, unique=True)

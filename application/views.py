@@ -25,6 +25,10 @@ def create(request):
         app = Application.objects.create_app(name=appname, user=request.user)
         return redirect('dashboard')
 
+def app(request):
+    if request.method == 'GET':
+        pass
+        
 
 @csrf_exempt
 def deploy_app(request):

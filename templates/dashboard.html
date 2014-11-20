@@ -22,7 +22,7 @@
                 {% endfor %}
             </ul>
         </div>
-            <button type="button">Create new app!</button>
+            <a href="{% url 'application_create' %}" class="btn btn-primary">Create new app!</a>
         {% else %}
         <div class="span6">
             <p>You haven't active your account</p>
