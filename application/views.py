@@ -49,7 +49,7 @@ def deploy_app(request):
     if not os.path.isdir(app_local_path):
         gitmodule.cloneRepo(app.git_repo, app_local_path)
     else:
-        gitmodule.repoPull(app.git_repo, new_rev)
+        gitmodule.repoPull(app_local_path, new_rev)
 
     appconfig.write_uwsgi_config(app)
     appconfig.write_nginx_config(app)
