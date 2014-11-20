@@ -31,6 +31,36 @@ def init_directories(app):
     os.chmod(app_path, 0775)
 
 
+def install_virtualenv(app):
+    app_host_app_path = app.host_app_path
+    app_local_repo_path = app.local_repo_path
+    app_virtualenv_path = app.local_virtualenv_path
+    app_virtualenv_activate_path = os.path.join(app_virtualenv_path, 'bin', 'activate')
+
+    if not os.path.isdir(app_virtualenv_path):
+        os.mkdir(app_virtualenv_path)
+
+    os.chmod(app_virtualenv_path, 0755)
+
+    if not os.path.exists(app_virtualenv_activate_path):
+        command.run(
+            "virtualenv --no-site-package %s" % app_virtualenv_path,
+            cwd=app_host_app_path
+        )
+
+    return command.run_script(
+        """
+        set -e
+        source %s
+        cd %s
+        pip install -r requirements.txt
+        deactivate
+        """ %
+        (app_virtualenv_activate_path, app_local_repo_path),
+        cwd=app_host_app_path
+    )
+
+
 def write_nginx_config(app):
     app_name = app.name
 
@@ -70,13 +100,12 @@ def write_uwsgi_config(app):
     app_name = app.name
 
     socket_name = app_name + '.socket'
-    virtualenv_name = app_name + '.virtualenv'
     log_name = app_name + '_uwsgi.log'
     uwsgi_config_name = app_name + '.ini'
 
     app_socket_path = os.path.join(settings.CONTAINER_CONTROL_DIR, socket_name)
-    app_chdir_path = os.path.join(settings.CONTAINER_APP_DIR, app_name)
-    app_virtualenv_path = os.path.join(settings.CONTAINER_APP_DIR, virtualenv_name)
+    app_chdir_path = app.local_repo_path
+    app_virtualenv_path = app.local_virtualenv_path
     app_log_path = os.path.join(settings.CONTAINER_APP_DIR, log_name)
 
     control_path = app.host_control_path

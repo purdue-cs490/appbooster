@@ -49,7 +49,7 @@ class Application(models.Model):
 
     @property
     def local_repo_path(self):
-        return os.path.join(settings.HOST_APP_DIR, self.name, self.name)
+        return os.path.join(self.host_app_path, self.name)
 
     @property
     def host_control_path(self):
@@ -62,3 +62,7 @@ class Application(models.Model):
     @property
     def host_nginx_config_path(self):
         return os.path.join(settings.NGINX_CONFIG_DIR, self.name)
+
+    @property
+    def local_virtualenv_path(self):
+        return os.path.join(self.host_app_path, self.name + '.virtualenv')
