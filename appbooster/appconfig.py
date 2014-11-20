@@ -56,7 +56,7 @@ def install_virtualenv(app):
         pip install -r requirements.txt
         deactivate
         """ %
-        (app_virtualenv_activate_path, app_local_repo_path),
+        (app_local_repo_path, app_virtualenv_activate_path),
         cwd=app_host_app_path
     )
 
