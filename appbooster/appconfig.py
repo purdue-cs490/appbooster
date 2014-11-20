@@ -32,7 +32,6 @@ def init_directories(app):
 
 
 def install_virtualenv(app):
-    app_host_app_path = app.host_app_path
     app_local_repo_path = app.local_repo_path
     app_virtualenv_path = app.local_virtualenv_path
     app_virtualenv_activate_path = os.path.join(app_virtualenv_path, 'bin', 'activate')
@@ -44,20 +43,18 @@ def install_virtualenv(app):
 
     if not os.path.exists(app_virtualenv_activate_path):
         command.run(
-            "virtualenv --no-site-package %s" % app_virtualenv_path,
-            cwd=app_host_app_path
+            "virtualenv --no-site-package %s" % app_virtualenv_path
         )
 
     return command.run_script(
         """
         set -e
-        source %s
         cd %s
+        source %s
         pip install -r requirements.txt
         deactivate
         """ %
-        (app_virtualenv_activate_path, app_local_repo_path),
-        cwd=app_host_app_path
+        (app_virtualenv_activate_path, app_local_repo_path)
     )
 
 
