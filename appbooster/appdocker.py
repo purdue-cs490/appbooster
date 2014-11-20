@@ -35,8 +35,8 @@ class AppDocker(object):
         if not container_id:
             raise AppDockerException("Failed to create container")
 
-        host_control_path = app.host_control_path()
-        host_app_path = app.host_app_path()
+        host_control_path = app.host_control_path
+        host_app_path = app.host_app_path
 
         bind_volumes = {
             host_control_path: {

@@ -47,14 +47,18 @@ class Application(models.Model):
 
     objects = ApplicationManager()
 
+    @property
     def local_repo_path(self):
         return os.path.join(settings.HOST_APP_DIR, self.name, self.name)
 
+    @property
     def host_control_path(self):
         return os.path.join(settings.HOST_CONTROL_DIR, self.name)
 
+    @property
     def host_app_path(self):
         return os.path.join(settings.HOST_APP_DIR, self.name)
 
+    @property
     def host_nginx_config_path(self):
         return os.path.join(settings.NGINX_CONFIG_DIR, self.name)

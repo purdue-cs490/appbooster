@@ -16,8 +16,8 @@ def touch(path):
 
 
 def init_directories(app):
-    control_path = app.host_control_path()
-    app_path = app.host_app_path()
+    control_path = app.host_control_path
+    app_path = app.host_app_path
 
     if not os.path.isdir(control_path):
         os.mkdir(control_path)
@@ -36,9 +36,9 @@ def write_nginx_config(app):
     nginx_access_name = app_name + '_nginx_access'
     nginx_error_name = app_name + '_nginx_error'
 
-    control_path = app.host_control_path()
-    app_path = app.host_app_path()
-    nginx_config_path = app.host_nginx_config_path()
+    control_path = app.host_control_path
+    app_path = app.host_app_path
+    nginx_config_path = app.host_nginx_config_path
 
     nginx_access_path = os.path.join(app_path, nginx_access_name)
     nginx_error_path = os.path.join(app_path, nginx_error_name)
@@ -77,7 +77,7 @@ def write_uwsgi_config(app):
     app_virtualenv_path = os.path.join(settings.CONTAINER_APP_DIR, virtualenv_name)
     app_log_path = os.path.join(settings.CONTAINER_APP_DIR, log_name)
 
-    control_path = app.host_control_path()
+    control_path = app.host_control_path
     uwsgi_config_path = os.path.join(control_path, uwsgi_config_name)
 
     init_directories(app_name)
@@ -100,7 +100,7 @@ def write_uwsgi_config(app):
 
 
 def remove_nginx_config(app):
-    nginx_config_path = app.host_nginx_config_path()
+    nginx_config_path = app.host_nginx_config_path
 
     if os.path.exists(nginx_config_path):
         os.remove(nginx_config_path)

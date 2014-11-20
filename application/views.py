@@ -45,7 +45,7 @@ def deploy_app(request):
     app_docker.stop(app)
 
     # Update local repo
-    app_local_path = app.local_repo_path()
+    app_local_path = app.local_repo_path
     if not os.path.isdir(app_local_path):
         gitmodule.cloneRepo(app.git_repo, app_local_path)
     else:
