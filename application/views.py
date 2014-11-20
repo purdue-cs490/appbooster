@@ -11,6 +11,10 @@ from appbooster.appdocker import AppDocker
 from application.models import Application
 
 
+class AppDeployException(Exception):
+    pass
+
+
 @login_required
 def create(request):
     if request.method == 'GET':
@@ -53,6 +57,7 @@ def deploy_app(request):
 
     appconfig.write_uwsgi_config(app)
     appconfig.write_nginx_config(app)
+    appconfig.install_virtualenv(app)
 
     appconfig.reload_nginx()
     app_docker.start(app)
