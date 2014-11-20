@@ -47,8 +47,7 @@ def deploy_app(request):
     # Update local repo
     app_local_path = app.local_repo_path()
     if not os.path.isdir(app_local_path):
-        local_git_repo_path = 'git@localhost/' + app.name + '.git'
-        gitmodule.cloneRepo(local_git_repo_path, app_local_path)
+        gitmodule.cloneRepo(app.git_repo, app_local_path)
     else:
         gitmodule.repoPull(app.git_repo, new_rev)
 
