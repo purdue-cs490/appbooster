@@ -44,7 +44,7 @@ def install_virtualenv(app):
 
     if not os.path.exists(app_virtualenv_activate_path):
         command.run(
-            "/usr/bin/virtualenv --no-site-packages %s" % app_virtualenv_path,
+            ["/usr/bin/virtualenv", "--no-site-packages", app_virtualenv_path],
             cwd=app_host_app_path
         )
 
