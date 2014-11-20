@@ -18,6 +18,7 @@ GITOLITE_CONF_DEFAULT = """repo gitolite-admin
 include "*.conf"
 """
 GITOLITE_CONF_REPO_TEMPLATE = """repo %s
+    RW+     =   appbooster
 %s
 """
 
