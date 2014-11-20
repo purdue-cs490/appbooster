@@ -25,10 +25,15 @@ def create(request):
         app = Application.objects.create_app(name=appname, user=request.user)
         return redirect('dashboard')
 
+
+@login_required
 def app(request, pk):
     if request.method == 'GET':
         app = Application.objects.get(pk=pk)
-        return render(request, 'application/app.html', {'error': '', 'app': app})
+        if request.user.appuser not in app.appusers.all():
+            return render(request, 'error.html', {'error': 'This app is not owned by you'})
+        else:
+            return render(request, 'application/app.html', {'error': '', 'app': app})
 
 
 @csrf_exempt
