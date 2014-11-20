@@ -22,6 +22,9 @@ def create(request):
     elif request.method == 'POST':
         param = request.POST
         appname = param.get('appname')
+        if ' ' in appname:
+            return render(request, 'application/create.html', {'error': 'app name cannot contain space'})
+
         app = Application.objects.create_app(name=appname, user=request.user)
         return redirect('dashboard')
 
