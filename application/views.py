@@ -28,7 +28,7 @@ def create(request):
 def app(request, pk):
     if request.method == 'GET':
         app = Application.objects.get(pk=pk)
-        return render(request, 'application/create.html', {'error': '', 'app': app})
+        return render(request, 'application/app.html', {'error': '', 'app': app})
 
 
 @csrf_exempt
