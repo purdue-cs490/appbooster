@@ -3,4 +3,5 @@ ENV/
 appdb
 *.sublime-*
 .DS_Store
-.*.swp
+*.swp
+*.vimrc
