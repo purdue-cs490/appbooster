@@ -102,8 +102,3 @@ def deploy_app(request):
     app_docker.start(app)
 
     return HttpResponse('OK', status=200)
-
-
-@csrf_exempt
-def deploy_app(request):
-
