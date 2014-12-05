@@ -7,7 +7,10 @@ from django.template import loader
 
 import command
 
-APPDCN_GID = grp.getgrnam('appdcn').gr_gid
+try:
+    APPDCN_GID = grp.getgrnam('appdcn').gr_gid
+except KeyError:
+    APPDCN_GID = -1
 
 
 def touch(path):
