@@ -24,10 +24,6 @@ def dashboard(request):
     return render(request, 'dashboard.html')
 
 
-def contact(request):
-    return render(request, 'index.html')
-
-
 def login(request):
     if request.method == 'GET':
         context = {
@@ -94,7 +90,7 @@ def register(request):
                 Hi, {0} {1}:
                     Thank you for using AppBooster. Here is your verification url:
                         {2}
-                
+
                 Best,
                 AppBooster
             '''.format(firstname, lastname, request.build_absolute_uri(verify_url),)

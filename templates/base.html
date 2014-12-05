@@ -65,7 +65,6 @@
               </li>
               <li {% block active_about%}{% endblock %}><a href="{% url 'not_completed' %}">About</a></li>
               -->
-               <li {% block active_contact%}{% endblock %}><a href="{% url 'contact' %}">Contact</a></li>
             </ul>
 
             {% if not request.user.is_authenticated %}
