@@ -64,7 +64,6 @@ class AppDocker(object):
             'container': container_id,
             'timeout': STOP_TIMEOUT,
         }
-
         self.client.stop(**stop_args)
 
     def start(self, app):
@@ -72,5 +71,12 @@ class AppDocker(object):
         start_args = {
             'container': container_id,
         }
-
         self.client.start(**start_args)
+
+    def remove(self, app):
+        container_id = app.container_id
+        remove_args = {
+            'container': container_id,
+            'force': True,
+        }
+        self.client.remove_container(**remove_args)

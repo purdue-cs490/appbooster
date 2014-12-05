@@ -31,6 +31,11 @@ def init_directories(app):
     os.chmod(app_path, 0775)
 
 
+def remove_directoires(app):
+    shutil.rmtree(app.host_control_path)
+    shutil.rmtree(app.host_app_path)
+
+
 def install_virtualenv(app):
     app_host_app_path = app.host_app_path
     app_local_repo_path = app.local_repo_path

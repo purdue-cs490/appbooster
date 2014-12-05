@@ -1,4 +1,5 @@
 import os
+import shutil
 
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest
@@ -39,6 +40,31 @@ def app(request, pk):
             return render(request, 'application/app.html', {'error': '', 'app': app})
 
 
+@login_required
+def delete(request, pk):
+    if request.method != 'GET':
+        return HttpResponseBadRequest()
+
+    app = get_object_or_404(Application, pk=pk)
+
+    # Remove nginx config
+    appconfig.remove_nginx_config(app)
+    appconfig.reload_nginx()
+
+    # Remove docker
+    app_docker = AppDocker()
+    app_docker.stop(app)
+    app_docker.remove(app)
+
+    # Remove directories
+    appconfig.remove_directoires(app)
+
+    # Remove repo
+    shutil.rmtree(app.local_repo_path)
+
+    return HttpResponse('OK', status=200)
+
+
 @csrf_exempt
 def deploy_app(request):
     if request.method != 'POST':
@@ -76,3 +102,8 @@ def deploy_app(request):
     app_docker.start(app)
 
     return HttpResponse('OK', status=200)
+
+
+@csrf_exempt
+def deploy_app(request):
+
