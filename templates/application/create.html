@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="unit">
-    <legend><h1>Create App</h1></legend>
+    <legend><h2>Create app</h2></legend>
     <form class="form-horizontal" name="register" action="." method="POST">{% csrf_token %}
         {% if error %}
             <div class="alert alert-error">{{ error }}</div>
