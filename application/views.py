@@ -34,7 +34,7 @@ def create(request):
 def app(request, pk):
     if request.method == 'GET':
         app = Application.objects.get(pk=pk)
-        if request.user.appuser not in app.appusers.all():
+        if not hasattr(request.user, 'appuser') or request.user.appuser not in app.appusers.all():
             return render(request, 'error.html', {'error': 'This app is not owned by you'})
         else:
             return render(request, 'application/app.html', {'error': '', 'app': app})
