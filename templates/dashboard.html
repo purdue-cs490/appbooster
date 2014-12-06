@@ -9,11 +9,14 @@
 
 {% block content %}
 <div class="unit">
-    <legend><h1 class="pull-center">
-           Welcome, {{ request.user.get_full_name }}! 
-    </h1></legend>
+    <legend>
+        <h1 class="pull-center">
+            Welcome, {{ request.user.get_full_name }}!
+        </h1>
+    </legend>
+    {% if user.is_active %}
+    <a href="{% url 'application_create' %}" class="btn btn-primary" style="float: right; display: inline-block;">Create</a>
     <div>
-        {% if user.is_active %}
         <div>
             <p>Here are some apps you created.</p>
             <ul>
@@ -24,12 +27,13 @@
                 {% endfor %}
             </ul>
         </div>
-            <a href="{% url 'application_create' %}" class="btn btn-primary">Create new app!</a>
-        {% else %}
+    </div>
+    {% else %}
+    <div>
         <div class="span6">
             <p>You haven't active your account</p>
         </div>
-        {% endif %}
     </div>
+    {% endif %}
 </div>
 {% endblock %}
