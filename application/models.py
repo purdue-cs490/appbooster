@@ -1,4 +1,5 @@
 import os
+import re
 
 from django.conf import settings
 from django.db import models
@@ -46,6 +47,10 @@ class Application(models.Model):
     git_repo = models.CharField(max_length=256)
 
     objects = ApplicationManager()
+
+    @property
+    def git_repo_local(self):
+        return re.sub(r'@.*/', '@localhost/', self.git_repo)
 
     @property
     def local_repo_path(self):
