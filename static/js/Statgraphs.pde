@@ -22,16 +22,10 @@ int volumeIntervalMinor = 5;
 
 void setup() {
 
-  size(800, 600);
-
-  text("Hello Web!",20,20);
-  println("Hello ErrorLog!");
-
-  data = new STable("stats.tsv");
+  size(1024, 768);
+  data = new STable("../../static/js/stats.tsv");
   rowCount = data.getRowCount();
   columnCount = data.getColumnCount();
-
-
 
   years = int(data.getRowNames());
   yearMin = years[0];
@@ -130,19 +124,6 @@ void drawPanel(){
   drawAxisLabels();
   drawVolumeLabels();
 
-/*  strokeWeight(5);
-  for( Thumbnail t : thumbnails){
-      if(!t.clicked) continue;
-      drawDataPoints(t.index, plotX1, plotY1, plotX2, plotY2);
-  }
-
-  //noFill();
-  strokeWeight(0.5);
-  for( Thumbnail t : thumbnails){
-      if(!t.clicked) continue;
-      drawDataLine(t.index);
-  }
-  */
   stroke(#5679C1);
   fill(#5679C1);
   for (int row = 0; row < rowCount; row++) {

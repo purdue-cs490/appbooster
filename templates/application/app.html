@@ -8,6 +8,7 @@
 <script src="{% static "js/processing.min.js" %}"></script>
 <div class="unit">
     <legend><h2>{{ app.name }}</h2></legend>
-    <canvas data-processing-sources="STable.pde Thumbnail.pde Integrator.pde Statgraph.pde" height=600 width=800></canvas>
+    test
+    <canvas data-processing-sources="{% static "js/STable.pde" %} {% static "js/Thumbnail.pde" %} {% static "js/Integrator.pde" %} {% static "js/Statgraphs.pde" %}" height=600 width=800></canvas>
 </div>
 {% endblock %}

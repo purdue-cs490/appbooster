@@ -18,7 +18,7 @@ class STable{
   STable(String filename) {
     String[] rows = loadStrings(filename);
 
-    String[] columns = split(rows[0], TAB);
+    String[] columns = split(rows[0], '\t');
     columnNames = subset(columns, 1); // upper-left corner ignored
     scrubQuotes(columnNames);
     columnCount = columnNames.length;
@@ -119,10 +119,12 @@ class STable{
 
     // begin training wheels
     if ((rowIndex < 0) || (rowIndex >= data.length)) {
-      throw new RuntimeException("There is no row " + rowIndex);
+         return 0.0;
+	// throw new RuntimeException("There is no row " + rowIndex);
     }
     if ((col < 0) || (col >= data[rowIndex].length)) {
-      throw new RuntimeException("Row " + rowIndex + " does not have a column " + col);
+     	return 0.0;
+	// throw new RuntimeException("Row " + rowIndex + " does not have a column " + col);
     }
     // end training wheels
 
@@ -136,12 +138,13 @@ class STable{
     //if (col >= columnCount) return false;
     if (col >= data[row].length) return false;
     if (col < 0) return false;
-    return !Float.isNaN(data[row][col]);
+    return true;
   }
 
 
   float getColumnMin(int col) {
-    float m = Float.MAX_VALUE;
+    //float m = Float.MAX_VALUE;
+    float m = 1000000000.0;
     for (int row = 0; row < rowCount; row++) {
       if (isValid(row, col)) {
         if (data[row][col] < m) {
@@ -154,7 +157,8 @@ class STable{
 
 
   float getColumnMax(int col) {
-    float m = -Float.MAX_VALUE;
+ float m = -10000000000.0;  
+ //float m = -Float.MAX_VALUE;
     for (int row = 0; row < rowCount; row++) {
       if (isValid(row, col)) {
         if (data[row][col] > m) {
@@ -167,7 +171,8 @@ class STable{
 
 
   float getRowMin(int row) {
-    float m = Float.MAX_VALUE;
+   float m = 10000000000.0;   
+// float m = Float.MAX_VALUE;
     for (int col = 0; col < columnCount; col++) {
       if (isValid(row, col)) {
         if (data[row][col] < m) {
@@ -180,7 +185,8 @@ class STable{
 
 
   float getRowMax(int row) {
-    float m = -Float.MAX_VALUE;
+	float m = -100000000000.0; 
+//   float m = -Float.MAX_VALUE;
     for (int col = 0; col < columnCount; col++) {
       if (isValid(row, col)) {
         if (data[row][col] > m) {
@@ -193,7 +199,8 @@ class STable{
 
 
   float getTableMin() {
-    float m = Float.MAX_VALUE;
+   float m = 1000000000000.0;   
+// float m = Float.MAX_VALUE;
     for (int row = 0; row < rowCount; row++) {
       for (int col = 0; col < columnCount; col++) {
         if (isValid(row, col)) {
@@ -208,7 +215,8 @@ class STable{
 
 
   float getTableMax() {
-    float m = -Float.MAX_VALUE;
+     float m = -100000000000.0;
+//   float m = -Float.MAX_VALUE;
     for (int row = 0; row < rowCount; row++) {
       for (int col = 0; col < columnCount; col++) {
         if (isValid(row, col)) {
