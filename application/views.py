@@ -53,8 +53,9 @@ def delete(request, pk):
 
     # Remove docker
     app_docker = AppDocker()
-    app_docker.stop(app)
-    app_docker.remove(app)
+    if app_docker.exists(app):
+        app_docker.stop(app)
+        app_docker.remove(app)
 
     # Remove directories
     appconfig.remove_directoires(app)

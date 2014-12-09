@@ -80,3 +80,10 @@ class AppDocker(object):
             'force': True,
         }
         self.client.remove_container(**remove_args)
+
+    def exists(self, app):
+        container_id = app.container_id
+        for container in self.client.containers():
+            if container.get('Id') == container_id:
+                return True
+        return False
