@@ -61,7 +61,7 @@ def write_ref(repo_path, heads):
         return False
 
     cmds = ['sudo', '-u', 'git', 'bash', '-c', '\n'.join(echo_cmds)]
-    proc = Popen(cmds, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    proc = subprocess.Popen(cmds, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     _, stderr = proc.communicate()
     ret = proc.wait()
 
