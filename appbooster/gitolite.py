@@ -1,4 +1,5 @@
 import os
+import subprocess
 
 from django.conf import settings
 
@@ -47,6 +48,27 @@ def commit():
     Git push.
     """
     gitmodule.repoPush(GITOLITE_ADMIN_GIT)
+
+
+def write_ref(repo_path, heads):
+    head_dir_path = os.path.join(repo_path, 'refs', 'heads')
+    echo_cmds = []
+
+    for head in heads:
+        echo_cmds.append('echo %s > %s' % (heads[head], os.path.join(head_dir_path, head)))
+
+    if not echo_cmds:
+        return False
+
+    cmds = ['sudo', '-u', 'git', 'bash', '-c', '\n'.join(echo_cmds)]
+    proc = Popen(cmds, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    _, stderr = proc.communicate()
+    ret = proc.wait()
+
+    if ret != 0:
+        raise GitoliteException(stderr)
+
+    return True
 
 
 def init():

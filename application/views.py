@@ -88,6 +88,8 @@ def deploy_app(request):
 
     app = get_object_or_404(Application, name=repo_name)
 
+    gitolite.write_ref(repo_path, {'deploy': new_rev})
+
     appconfig.init_directories(app)
     app_docker = AppDocker()
 
