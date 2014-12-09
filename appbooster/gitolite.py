@@ -19,6 +19,7 @@ include "*.conf"
 """
 GITOLITE_CONF_REPO_TEMPLATE = """repo %s
     RW+     =   appbooster
+    -   VREF/deploy       =   @all
 %s
 """
 
