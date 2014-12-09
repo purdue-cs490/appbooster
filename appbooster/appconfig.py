@@ -35,8 +35,11 @@ def init_directories(app):
 
 
 def remove_directoires(app):
-    shutil.rmtree(app.host_control_path)
-    shutil.rmtree(app.host_app_path)
+    if os.path.isdir(app.host_control_path):
+        shutil.rmtree(app.host_control_path)
+
+    if os.path.isdir(app.host_app_path):
+        shutil.rmtree(app.host_app_path)
 
 
 def install_virtualenv(app):
@@ -144,19 +147,9 @@ def remove_nginx_config(app):
 
     if os.path.exists(nginx_config_path):
         os.remove(nginx_config_path)
+        return True
 
-
-def remove_uwsgi_config(app):
-    app_name = app.name
-
-    control_path = os.path.join(settings.HOST_CONTROL_DIR, app_name)
-    app_path = os.path.join(settings.HOST_APP_DIR, app_name)
-
-    if os.path.isdir(control_path):
-        shutil.rmtree(control_path)
-
-    if os.path.isdir(app_path):
-        shutil.rmtree(app_path)
+    return False
 
 
 def reload_nginx():

@@ -48,8 +48,8 @@ def delete(request, pk):
     app = get_object_or_404(Application, pk=pk)
 
     # Remove nginx config
-    appconfig.remove_nginx_config(app)
-    appconfig.reload_nginx()
+    if appconfig.remove_nginx_config(app):
+        appconfig.reload_nginx()
 
     # Remove docker
     app_docker = AppDocker()
@@ -61,7 +61,8 @@ def delete(request, pk):
     appconfig.remove_directoires(app)
 
     # Remove repo
-    shutil.rmtree(app.local_repo_path)
+    if os.path.isdir(app.local_repo_path):
+        shutil.rmtree(app.local_repo_path)
 
     return HttpResponse('OK', status=200)
 
