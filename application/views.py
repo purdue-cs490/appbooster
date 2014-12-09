@@ -64,6 +64,8 @@ def delete(request, pk):
     if os.path.isdir(app.local_repo_path):
         shutil.rmtree(app.local_repo_path)
 
+    app.delete()
+
     return HttpResponse('OK', status=200)
 
 
