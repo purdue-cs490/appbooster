@@ -12,6 +12,10 @@ def main():
     new_commit = sys.argv[3]
     repo_path = os.getcwd()
 
+    #skip gitolite-admin
+    if 'gitolite-admin' in repo_path:
+        return 0
+
     payload = {
         'repo_path': repo_path, 
         'refname': refname,
