@@ -1,0 +1,15 @@
+#!/usr/bin/env python
+
+import sys, smtplib, os, requests
+from email.mime.text import MIMEText
+from subprocess import check_output
+
+branch = sys.argv[1]
+old_commit = sys.argv[2]
+new_commit = sys.argv[3]
+
+payload = {'Repo': os.getcwd(), 'oldRevision': old_commit, 'newRevision', new_commit}
+r = requests.post('http://localhost/app/private/deploy/', params=payload)
+
+if r.status_code != 200:
+    sys.exit(1)
