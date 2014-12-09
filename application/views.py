@@ -71,8 +71,9 @@ def deploy_app(request):
         return HttpResponseBadRequest()
 
     repo_name = os.path.basename(request.POST.get('repo_path')).rstrip('.git')
-    new_rev = request.POST.get('new_rev')
+    refname = request.POST.get('refname')
     old_rev = request.POST.get('old_rev')
+    new_rev = request.POST.get('new_rev')
 
     app = get_object_or_404(Application, name=repo_name)
 
