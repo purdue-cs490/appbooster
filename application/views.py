@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from appbooster import appconfig
 from appbooster import gitmodule
+from appbooster import gitolite
 from appbooster.appdocker import AppDocker
 from application.models import Application
 
@@ -61,8 +62,7 @@ def delete(request, pk):
     appconfig.remove_directoires(app)
 
     # Remove repo
-    if os.path.isdir(app.local_repo_path):
-        shutil.rmtree(app.local_repo_path)
+    gitolite.rm_repo(app.name)
 
     app.delete()
 
