@@ -7,6 +7,6 @@ urlpatterns = patterns('application.views',
     # url(r'^blog/', include('blog.urls')),
     url(r'^create/$', 'create', name='application_create'),
     url(r'^(?P<pk>[0-9]+)/$', 'app', name='application_app'),
-    url(r'^(?P<pk>[0-9]+)/delete$', 'app', name='application_delete'),
+    url(r'^(?P<pk>[0-9]+)/delete$', 'delete', name='application_delete'),
     url(r'^private/deploy/$', 'deploy_app', name='application_deploy'),
 )
