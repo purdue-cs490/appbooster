@@ -14,8 +14,8 @@ class ApplicationManager(models.Manager):
         name,
         user,
     ):
-        git_repo = gitolite.add_repo(name, [user.email])
         gitolite.init()
+        git_repo = gitolite.add_repo(name, [user.email])
         gitolite.commit()
         app = self.create(
             name=name,
