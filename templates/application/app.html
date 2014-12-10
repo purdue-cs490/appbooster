@@ -15,12 +15,11 @@
 
     <script>
     $(".delete").click(function() {
-        $.get({% url 'application_delete' app.pk %}, function(data, status) {
-            if (status !== 200) {
-                alert("Failed to delete app.");
-            } else {
-                window.location.href = {% url 'dashboard' %};
-            }
+        $.get("{% url 'application_delete' app.pk %}", function() {
+            window.location.href = "{% url 'dashboard' %}";
+        })
+        .fail(function() {
+            alert("Failed to delete app.");
         });
     });
     </script>
