@@ -2,6 +2,7 @@ import os
 import shutil
 
 from django.contrib.auth.decorators import login_required
+from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
@@ -27,7 +28,11 @@ def create(request):
         if ' ' in appname:
             return render(request, 'application/create.html', {'error': 'app name cannot contain space'})
 
-        app = Application.objects.create_app(name=appname, user=request.user)
+        try:
+            app = Application.objects.create_app(name=appname, user=request.user)
+        except IntegrityError as e:
+            return render(request, 'error.html', {'error': e.message})
+
         return redirect('dashboard')
 
 
