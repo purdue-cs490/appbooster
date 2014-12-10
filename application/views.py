@@ -72,8 +72,7 @@ def delete(request, pk):
 
     # Remove repo
     gitolite.rm_repo(app.name)
-
-    # TODO: Actually remove the git folder from /home/git/repositories
+    gitolite.delete_git_folder(app.name)
 
     app.delete()
 

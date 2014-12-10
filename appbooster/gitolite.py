@@ -30,6 +30,7 @@ COMMENT_REMOVE_USER_TEMPLATE = "Removed user %s."
 COMMENT_REMOVE_REPO_TEMPLATE = "Removed repo %s."
 
 GIT_URL_TEMPLATE = "ssh://git@%s:%d/%s.git"
+GIT_REPOS_DIR = '/home/git/repositories'
 
 
 class GitoliteException(Exception):
@@ -154,6 +155,23 @@ def rm_repo(repo):
 
     comment = COMMENT_REMOVE_REPO_TEMPLATE % repo_name
     _commit(comment)
+
+
+def delete_git_folder(repo_name):
+    repo_path = os.path.join(GIT_REPOS_DIR, repo_name + '.git')
+
+    if not os.path.isdir(repo_path):
+        return False
+
+    cmds = ['sudo', '-u', 'git', 'rm', '-rf', repo_path]
+    proc = subprocess.Popen(cmds, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    _, _ = proc.communicate()
+    ret = proc.wait()
+
+    if ret != 0:
+        return False
+
+    return True
 
 
 if __name__ == '__main__':
