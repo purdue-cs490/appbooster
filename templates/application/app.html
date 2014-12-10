@@ -11,7 +11,7 @@
     <legend><h2>{{ app.name }}</h2></legend>
     test
     <!-- <canvas data-processing-sources="{% static "js/STable.pde" %} {% static "js/Thumbnail.pde" %} {% static "js/Integrator.pde" %} {% static "js/Statgraphs.pde" %}" height=600 width=800></canvas> -->
-    <iframe src="http://mc18.cs.purdue.edu:5601/#/visualize/edit/200v304?embed&_g=(time:(from:now-7d,mode:quick,to:now))&_a=(query:(query_string:(query:'*')),vis:(aggs:!((params:(filters:!(('$$hashKey':'02E',input:(query:(query_string:(query:'path:!'%2Fu%2Fapps%2F{(app.host_app_path)}%2F%5C*!'%20AND%20response:200')))),('$$hashKey':'02F',input:(query:(query_string:(query:'path:!'%2Fu%2Fapps%2F{(app.host_app_path)}%2F%5C*!'%20AND%20response:304')))))),schema:segment,type:filters),(params:(),schema:metric,type:count)),params:(addLegend:!t,addTooltip:!t,mode:stacked,shareYAxis:!t,spyPerPage:10),type:histogram))" height="600" width="1200"></iframe>
+    <iframe src="http://mc18.cs.purdue.edu:5601/#/visualize/edit/200v304?embed&_g=(time:(from:now-7d,mode:quick,to:now))&_a=(query:(query_string:(query:'*')),vis:(aggs:!((params:(filters:!(('$$hashKey':'02E',input:(query:(query_string:(query:'path:!'%2Fu%2Fapps%2F{( app.name )}%2F%5C*!'%20AND%20response:200')))),('$$hashKey':'02F',input:(query:(query_string:(query:'path:!'%2Fu%2Fapps%2F{( app.name )}%2F%5C*!'%20AND%20response:304')))))),schema:segment,type:filters),(params:(),schema:metric,type:count)),params:(addLegend:!t,addTooltip:!t,mode:stacked,shareYAxis:!t,spyPerPage:10),type:histogram))" height="600" width="1200"></iframe>
 </div>
 
 {% endblock %}
