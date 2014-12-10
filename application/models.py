@@ -17,7 +17,7 @@ class ApplicationManager(models.Manager):
         user,
     ):
         if Application.objects.filter(name=name).exists():
-            IntegrityError('An app named \"' + name + '\" already exists')
+            raise IntegrityError('An app named \"' + name + '\" already exists')
 
         gitolite.init()
         git_repo = gitolite.add_repo(name, [user.email])
