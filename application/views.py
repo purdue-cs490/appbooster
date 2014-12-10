@@ -92,31 +92,34 @@ def deploy_app(request):
 
     app = get_object_or_404(Application, name=repo_name)
 
-    gitolite.write_ref(repo_path, {'deploy': new_rev})
+    try:
+        gitolite.write_ref(repo_path, {'deploy': new_rev})
 
-    appconfig.init_directories(app)
-    app_docker = AppDocker()
+        appconfig.init_directories(app)
+        app_docker = AppDocker()
 
-    # If container is not created yet
-    if not app.container_id:
-        container_id = app_docker.create_start(app)
-        app.container_id = container_id
-        app.save()
+        # If container is not created yet
+        if not app.container_id:
+            container_id = app_docker.create_start(app)
+            app.container_id = container_id
+            app.save()
 
-    app_docker.stop(app)
+        app_docker.stop(app)
 
-    # Update local repo
-    app_local_path = app.local_repo_path
-    if not os.path.isdir(app_local_path):
-        gitmodule.cloneRepo(app.git_repo_local, app_local_path)
+        # Update local repo
+        app_local_path = app.local_repo_path
+        if not os.path.isdir(app_local_path):
+            gitmodule.cloneRepo(app.git_repo_local, app_local_path)
 
-    gitmodule.repoPull(app_local_path, new_rev)
+        gitmodule.repoPull(app_local_path, new_rev)
 
-    appconfig.write_uwsgi_config(app)
-    appconfig.write_nginx_config(app)
-    appconfig.install_virtualenv(app)
+        appconfig.write_uwsgi_config(app)
+        appconfig.write_nginx_config(app)
+        appconfig.install_virtualenv(app)
 
-    appconfig.reload_nginx()
-    app_docker.start(app)
+        appconfig.reload_nginx()
+        app_docker.start(app)
 
-    return HttpResponse('OK', status=200)
+        return HttpResponse('OK', status=200)
+    finally:
+        gitolite.remove_ref(repo_path, ['deploy'])

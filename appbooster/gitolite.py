@@ -72,6 +72,30 @@ def write_ref(repo_path, heads):
     return True
 
 
+def remove_ref(repo_path, head_names):
+    if isinstance(head_names, str):
+        head_names = [head_names]
+
+    head_dir_path = os.path.join(repo_path, 'refs', 'heads')
+    rm_cmds = []
+
+    for head_name in head_names:
+        rm_cmds.append('rm -f %s' % os.path.join(head_dir_path, head_name))
+
+    if not rm_cmds:
+        return False
+
+    cmds = ['sudo', '-u', 'git', 'bash', '-c', '\n'.join(rm_cmds)]
+    proc = subprocess.Popen(cmds, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    _, stderr = proc.communicate()
+    ret = proc.wait()
+
+    if ret != 0:
+        raise GitoliteException(stderr)
+
+    return True
+
+
 def init():
     if not os.path.isdir(GITOLITE_ADMIN_DIR):
         gitmodule.cloneRepo('ssh://git@localhost:22/gitolite-admin.git', GITOLITE_ADMIN_DIR)
