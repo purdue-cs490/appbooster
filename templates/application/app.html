@@ -8,8 +8,8 @@
 
 <script src="{% static "js/processing.min.js" %}"></script>
 <div class="unit">
-    <a href="{% url 'application_delete' app.pk %}" class="btn btn-danger" style="float: right; display: inline-block;">Delete</a>
     <legend><h2>{{ app.name }}</h2></legend>
+    <a href="{% url 'application_delete' app.pk %}" class="btn btn-danger" style="float: right; display: inline-block;">Delete</a>
     <!-- <canvas data-processing-sources="{% static "js/STable.pde" %} {% static "js/Thumbnail.pde" %} {% static "js/Integrator.pde" %} {% static "js/Statgraphs.pde" %}" height=600 width=800></canvas> -->
     <iframe src="http://mc18.cs.purdue.edu:5601/#/visualize/edit/200v304?embed&_g=(time:(from:now-7d,mode:quick,to:now))&_a=(query:(query_string:(query:'*')),vis:(aggs:!((params:(filters:!(('$$hashKey':'02E',input:(query:(query_string:(query:'path:!'%2Fu%2Fapps%2F{{ app.name }}%2F%5C*!'%20AND%20response:200')))),('$$hashKey':'02F',input:(query:(query_string:(query:'path:!'%2Fu%2Fapps%2F{{ app.name }}%2F%5C*!'%20AND%20response:304')))))),schema:segment,type:filters),(params:(),schema:metric,type:count)),params:(addLegend:!t,addTooltip:!t,mode:stacked,shareYAxis:!t,spyPerPage:10),type:histogram))" height="600" width="800"></iframe>
 </div>
