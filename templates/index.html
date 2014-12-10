@@ -9,12 +9,12 @@
         <h1 class="welcome">Welcome to AppBooster!</h1>
         <div class="row-fluid">
             <div class="description">
-                <div class="alert alert-block" style="text-align:left">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <p><b>Notice:</b></p>
-                    <p>You need to have Purdue account to use this app!</p>
-                </div>
                 {% if not request.user.is_authenticated %}
+                    <div class="alert alert-block" style="text-align:left">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <p><b>Notice:</b></p>
+                        <p>You need to have Purdue account to use this app!</p>
+                    </div>
                     <p>
                     <a href="{% url 'register' %}" class="btn btn-large">Register Now »</a>
                     <a href="{% url 'login' %}" class="btn btn-inverse btn-large">Sign In »</a>
