@@ -5,3 +5,4 @@ appdb
 .DS_Store
 *.swp
 *.vimrc
+.ENV/
