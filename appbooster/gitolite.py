@@ -160,9 +160,6 @@ def rm_repo(repo):
 def delete_git_folder(repo_name):
     repo_path = os.path.join(GIT_REPOS_DIR, repo_name + '.git')
 
-    if not os.path.isdir(repo_path):
-        return False
-
     cmds = ['sudo', '-u', 'git', 'rm', '-rf', repo_path]
     proc = subprocess.Popen(cmds, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     _, _ = proc.communicate()
