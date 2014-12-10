@@ -3,6 +3,7 @@ import re
 
 from django.conf import settings
 from django.db import models
+from django.db import IntegrityError
 
 from appbooster import gitolite
 from appbooster.models import AppUser
@@ -15,6 +16,9 @@ class ApplicationManager(models.Manager):
         name,
         user,
     ):
+        if Application.objects.filter(name=name).exists():
+            IntegrityError('An app named \"' + name + '\" already exists')
+
         gitolite.init()
         git_repo = gitolite.add_repo(name, [user.email])
         gitolite.commit()
