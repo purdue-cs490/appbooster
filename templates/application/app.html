@@ -16,6 +16,24 @@ $(document).ready(function(){
       	});
 });
 </script>
+<div class="row">
+	<div id="tabs" class="col-12 col-sm-12 col-lg-12">
+		<div role="tabpanel">
+
+			<!-- Nav tabs -->
+			<ul class="nav nav-pills" role="tablist">
+				<li role="presentation" class="active"><a href="#appinfo" aria-controls="appinfo" role="tab" data-toggle="tab">App Information</a></li>
+				<li role="presentation"><a href="#appusage" aria-controls="appusage" role="tab" data-toggle="tab">App Usage</a></li>
+			</ul>
+
+			<!-- Tab panes -->
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane active" id="appinfo">appinfo</div>
+				<div role="tabpanel" class="tab-pane" id="appusage">appusage</div>
+			</div>
+		</div>
+	</div>
+</div>
 <div class="unit">
     <legend><h2>{{ app.name }}</h2></legend>
     <a href="javascript:void(0)" class="btn btn-danger delete" style="float: right; display: inline-block;">Delete</a>
