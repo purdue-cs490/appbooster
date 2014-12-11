@@ -14,9 +14,11 @@ def validate_pub(pub):
         tmpf=/tmp/appbooster-$RANDOM.pub
         cat << EOF > $tmpf
 %s
-        EOF
+EOF
         ssh-keygen -l -f $tmpf
-        return $?
+        ret=$?
+        rm -f $tmpf
+        exit $ret
         """ % pub
     ret = subprocess.call(['bash', '-c', run_script])
     if ret != 0:
