@@ -9,6 +9,20 @@ from django.core.exceptions import ValidationError
 import gitolite
 
 
+def validate_pub(pub):
+    run_script = """
+        tmpf=/tmp/appbooster-$RANDOM.pub
+        cat << EOF > $tmpf
+%s
+        EOF
+        ssh-keygen -l -f $tmpf
+        return $?
+        """ % pub
+    ret = subprocess.call(['bash', '-c', run_script])
+    if ret != 0:
+        raise ValidationError('Not a valid public key')
+
+
 class AppUserManager(models.Manager):
     def create_user(
         self,
@@ -52,17 +66,3 @@ class AppUser(models.Model):
             v = ''.join(random.choice(string.letters + string.digits) for _ in range(length))
         self.verifycode = v
         self.save()
-
-
-def validate_pub(pub):
-    run_script = """
-        tmpf=/tmp/appbooster-$RANDOM.pub
-        cat << EOF > $tmpf
-%s
-        EOF
-        ssh-keygen -l -f $tmpf
-        return $?
-        """ % pub
-    ret = subprocess.call(['bash', '-c', run_script])
-    if ret != 0:
-        raise ValidationError('Not a valid public key')
