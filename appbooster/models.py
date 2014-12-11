@@ -1,8 +1,10 @@
 import random
 import string
+import subprocess
 
 from django.contrib.auth.models import User as Auth_User
 from django.db import models
+from django.core.exceptions import ValidationError
 
 import gitolite
 
@@ -39,7 +41,7 @@ class AppUserManager(models.Manager):
 # Create your models here.
 class AppUser(models.Model):
     user = models.OneToOneField(Auth_User, primary_key=True)
-    public_ssh = models.CharField(max_length=1024)
+    public_ssh = models.CharField(max_length=1024, validators=[validate_pub])
     verifycode = models.CharField(max_length=20, unique=True)
 
     objects = AppUserManager()
@@ -50,3 +52,17 @@ class AppUser(models.Model):
             v = ''.join(random.choice(string.letters + string.digits) for _ in range(length))
         self.verifycode = v
         self.save()
+
+
+def validate_pub(pub):
+    run_script = """
+        tmpf=/tmp/appbooster-$RANDOM.pub
+        cat << EOF > $tmpf
+%s
+        EOF
+        ssh-keygen -l -f $tmpf
+        return $?
+        """ % pub
+    ret = subprocess.call(['bash', '-c', run_script])
+    if ret != 0:
+        raise ValidationError('Not a valid public key')
