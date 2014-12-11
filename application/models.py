@@ -75,3 +75,7 @@ class Application(models.Model):
     @property
     def local_virtualenv_path(self):
         return os.path.join(self.host_app_path, self.name + '.virtualenv')
+
+    @property
+    def app_url(self):
+        return 'http://' + settings.HOST_NAME + ':' + self.port_num + '/'
