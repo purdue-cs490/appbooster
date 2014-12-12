@@ -9,18 +9,6 @@
 
 {% block content %}
 
-<script>
-$(document).ready(function(){
-    $.getJSON("http://mc18.cs.purdue.edu:17990/stats?appid={{app.container_id}}",function(result)
-	{
-		var cpu_percent = +result.stats.cpu.cpuacct.stat_percent;
-                var mem_bytes = +result.stats.memory.memsw.usage_in_bytes;
-                var ss = " <h4>CPU: " + cpu_percent.toFixed(4) + "% Mem: " + mem_bytes/1024 + "KB</h4>";
-                document.getElementById("cpustat").innerHTML = ss;
-	});
-});
-</script>
-
 <div class="unit">
     <legend><h2><div class="appname">{{ app.name }}</div></h2></legend>
     <div>
@@ -82,6 +70,15 @@ $(document).ready(function(){
         })
         .fail(function() {
             alert("Failed to delete app.");
+        });
+    });
+    $(document).ready(function(){
+        $.getJSON("http://mc18.cs.purdue.edu:17990/stats?appid={{app.container_id}}",function(result)
+	    {
+		    var cpu_percent = +result.stats.cpu.cpuacct.stat_percent;
+            var mem_bytes = +result.stats.memory.memsw.usage_in_bytes;
+            var ss = " <h4>CPU: " + (100 * cpu_percent).toFixed(4) + "% Mem: " + mem_bytes/1024 + "KB</h4>";
+            document.getElementById("cpustat").innerHTML = ss;
         });
     });
     </script>
