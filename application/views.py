@@ -85,7 +85,11 @@ def deploy_app(request):
         return HttpResponseBadRequest()
 
     repo_path = request.POST['repo_path']
-    repo_name = os.path.basename(repo_path).rstrip('.git')
+    repo_base_path = os.path.basename(repo_path)
+    if repo_base_path[-4:] == '.git':
+        repo_name = repo_base_path[:-4]
+    else:
+        repo_name = repo_base_path
     refname = request.POST['refname']
     old_rev = request.POST['old_rev']
     new_rev = request.POST['new_rev']
