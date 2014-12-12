@@ -34,6 +34,7 @@ class AppUserManager(models.Manager):
         lastname,
         ssh,
     ):
+        validate_pub(ssh)
         gitolite.init()
         gitolite.add_user(email, ssh)
         gitolite.commit()

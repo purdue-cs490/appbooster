@@ -38,19 +38,24 @@ $(document).ready(function(){
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="appinfo">
                     <div class="row-fluid">
-                <div class="span2 info-bloc">
-                    <h3 class="info-label">App URL:</h3>
-                    <h3 class="info-label">Git URL:</h3>
-                </div>
-                <div class="span10 info-bloc">
-                    <h3 class="info-label"><a href="{{ app.app_url }}">{{ app.app_url }}</a>
-                    {% if not app.container_id %}
-                    (Not deployed yet)
-                    {% endif %}
-                    </h3>
-                    <h3 class="info-label">{{ app.git_repo }}</a></h3>
-            </div>
-    </div>
+                        <div class="span2 info-bloc">
+                            <h3 class="info-label">App URL:</h3>
+                            <h3 class="info-label">Git URL:</h3>
+                        </div>
+                        <div class="span10 info-bloc">
+                            <h3 class="info-label"><a href="{{ app.app_url }}">{{ app.app_url }}</a>
+                            {% if not app.container_id %}
+                            (Not deployed yet)
+                            {% endif %}
+                            </h3>
+                            <h3 class="info-label">{{ app.git_repo }}</a></h3>
+                        </div>
+                    </div>
+                    <div class="alert alert-info" style="text-align:left">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <p><b>How to deploy:</b></p>
+                        <p>Copy the git url and add it to your local git remote!</p>
+                    </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="appusage">
                     <!-- <canvas data-processing-sources="{% static "js/STable.pde" %} {% static "js/Thumbnail.pde" %} {% static "js/Integrator.pde" %} {% static "js/Statgraphs.pde" %}" height=600 width=800></canvas> -->

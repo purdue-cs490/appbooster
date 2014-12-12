@@ -78,13 +78,17 @@ def register(request):
         elif User.objects.filter(email=email).exists():
             return render(request, 'register.html', {'error': 'Email Exists'})
         else:
-            my_user = AppUser.objects.create_user(
-                email,
-                password,
-                firstname=firstname,
-                lastname=lastname,
-                ssh=ssh,
-            )
+            my_user = None
+            try:
+                my_user = AppUser.objects.create_user(
+                    email,
+                    password,
+                    firstname=firstname,
+                    lastname=lastname,
+                    ssh=ssh,
+                )
+            except ValidationError as e:
+                return render(request, 'register.html', {'error': 'Not a valid SSH'})
             verify_url = reverse('verify', kwargs={'verifycode':my_user.verifycode})
             msg = '''
                 Hi, {0} {1}:
