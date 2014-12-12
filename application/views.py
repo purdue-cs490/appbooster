@@ -94,9 +94,7 @@ def deploy_app(request):
     old_rev = request.POST['old_rev']
     new_rev = request.POST['new_rev']
 
-    print("repo_name: " + str(repo_name))
     app = get_object_or_404(Application, name=repo_name)
-    print("app found!")
 
     try:
         gitolite.write_ref(repo_path, {'deploy': new_rev})
