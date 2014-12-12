@@ -3,6 +3,9 @@
 {% load staticfiles %}
 {% block active_dashboard %}class="active"{% endblock %}
 
+{% block css %}
+    <link href="{% static "css/app.css" %}" rel="stylesheet">
+{% endblock %}
 
 {% block content %}
 
@@ -17,29 +20,48 @@ $(document).ready(function(){
 	});
 });
 </script>
-<div class="row">
-	<div id="tabs" class="col-12 col-sm-12 col-lg-12">
-		<div role="tabpanel">
 
-			<!-- Nav tabs -->
-			<ul class="nav nav-pills" role="tablist">
-				<li role="presentation" class="active"><a href="#appinfo" aria-controls="appinfo" role="tab" data-toggle="tab">App Information</a></li>
-				<li role="presentation"><a href="#appusage" aria-controls="appusage" role="tab" data-toggle="tab">App Usage</a></li>
-			</ul>
-
-			<!-- Tab panes -->
-			<div class="tab-content">
-				<div role="tabpanel" class="tab-pane active" id="appinfo">appinfo</div>
-				<div role="tabpanel" class="tab-pane" id="appusage">appusage</div>
-			</div>
-		</div>
-	</div>
-</div>
 <div class="unit">
     <legend><h2><div class="appname">{{ app.name }}{{ app.container_id }}</div></h2></legend>
-    <a href="javascript:void(0)" class="btn btn-danger delete" style="float: right; display: inline-block;">Delete</a>
-    <!-- <canvas data-processing-sources="{% static "js/STable.pde" %} {% static "js/Thumbnail.pde" %} {% static "js/Integrator.pde" %} {% static "js/Statgraphs.pde" %}" height=600 width=800></canvas> -->
-    <iframe src="http://mc18.cs.purdue.edu:5601/#/visualize/edit/200v304?embed&_g=(time:(from:now-7d,mode:quick,to:now))&_a=(query:(query_string:(query:'*')),vis:(aggs:!((params:(filters:!(('$$hashKey':'02E',input:(query:(query_string:(query:'path:!'%2Fu%2Fapps%2F{{ app.name }}%2F%5C*!'%20AND%20response:200')))),('$$hashKey':'02F',input:(query:(query_string:(query:'path:!'%2Fu%2Fapps%2F{{ app.name }}%2F%5C*!'%20AND%20response:304')))))),schema:segment,type:filters),(params:(),schema:metric,type:count)),params:(addLegend:!t,addTooltip:!t,mode:stacked,shareYAxis:!t,spyPerPage:10),type:histogram))" height="600" width="800"></iframe>
+    <div class="row">
+    <div id="tabs" class="col-12 col-sm-12 col-lg-12">
+        <div role="tabpanel">
+
+            <!-- Nav tabs -->
+            <ul class="nav nav-pills" role="tablist">
+                <li role="presentation" class="active"><a href="#appinfo" aria-controls="appinfo" role="tab" data-toggle="tab">App Information</a></li>
+                <li role="presentation"><a href="#appusage" aria-controls="appusage" role="tab" data-toggle="tab">App Usage</a></li>
+                <a href="javascript:void(0)" class="btn btn-danger delete" style="float: right; display: inline-block;">Delete</a>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="appinfo">
+                    <div class="row-fluid">
+                <div class="span6 info-bloc">
+                    <h3 class="info-label">App URL:</h3>
+                    <h3 class="info-label">Git URL:</h3>
+                </div>
+        <div class="span6 info-bloc">
+            <h3 class="info-label"><a href="{{ app.app_url }}">{{ app.app_url }}</a></h3>
+            <h3 class="info-label">{{ app.git_repo }}</a></h3>
+        </div>
+    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="appusage">
+                    <!-- <canvas data-processing-sources="{% static "js/STable.pde" %} {% static "js/Thumbnail.pde" %} {% static "js/Integrator.pde" %} {% static "js/Statgraphs.pde" %}" height=600 width=800></canvas> -->
+                    <iframe src="http://mc18.cs.purdue.edu:5601/#/visualize/edit/200v304?embed&_g=(time:(from:now-7d,mode:quick,to:now))&_a=(query:(query_string:(query:'*')),vis:(aggs:!((params:(filters:!(('$$hashKey':'02E',input:(query:(query_string:(query:'path:!'%2Fu%2Fapps%2F{{ app.name }}%2F%5C*!'%20AND%20response:200')))),('$$hashKey':'02F',input:(query:(query_string:(query:'path:!'%2Fu%2Fapps%2F{{ app.name }}%2F%5C*!'%20AND%20response:304')))))),schema:segment,type:filters),(params:(),schema:metric,type:count)),params:(addLegend:!t,addTooltip:!t,mode:stacked,shareYAxis:!t,spyPerPage:10),type:histogram))" height="1000" width="90%"></iframe>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    
+
+    </div>
+    
+    
 
     <script>
     $(".delete").click(function() {
