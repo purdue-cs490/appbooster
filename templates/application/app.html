@@ -77,7 +77,7 @@
 	    {
 		    var cpu_percent = +result.stats.cpu.cpuacct.stat_percent;
             var mem_bytes = +result.stats.memory.memsw.usage_in_bytes;
-            var ss = " <h4>CPU: " + (100 * cpu_percent).toFixed(1) + "% Mem: " + mem_bytes/1024 + "KB</h4>";
+            var ss = " <h4>CPU: " + (100 * cpu_percent).toFixed(4) + "% Mem: " + mem_bytes/1024 + "KB</h4>";
             document.getElementById("cpustat").innerHTML = ss;
         });
     });
