@@ -78,4 +78,4 @@ class Application(models.Model):
 
     @property
     def app_url(self):
-        return 'http://' + settings.HOST_NAME + ':' + self.port_num + '/'
+        return 'http://' + settings.HOST_NAME + ':' + str(self.port_num) + '/'
