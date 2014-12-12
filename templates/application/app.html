@@ -42,15 +42,14 @@
                         </div>
                     </div>
                     <div class="alert alert-info" style="text-align:left">
-                        <p><b>Add to local repo:</b></p>
+                        <p><b>To add to local repo:</b></p>
                         <p>git remote add {{ app.name }} {{ app.git_repo }}</p>
-                        <p><b>Deploy local branch:</b></p>
+                        <p><b>To deploy local branch:</b></p>
                         <p>git push {{ app.name }} (branch_name):master</p>
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="appusage">
                 <p id="cpustat">{{app.container_id}}cpustat</p>
-                    <!-- <canvas data-processing-sources="{% static "js/STable.pde" %} {% static "js/Thumbnail.pde" %} {% static "js/Integrator.pde" %} {% static "js/Statgraphs.pde" %}" height=600 width=800></canvas> -->
                     <iframe src="http://mc18.cs.purdue.edu:5601/#/visualize/edit/200v304?embed&_g=(time:(from:now-7d,mode:quick,to:now))&_a=(query:(query_string:(query:'*')),vis:(aggs:!((params:(filters:!(('$$hashKey':'02E',input:(query:(query_string:(query:'path:!'%2Fu%2Fapps%2F{{ app.name }}%2F%5C*!'%20AND%20response:200')))),('$$hashKey':'02F',input:(query:(query_string:(query:'path:!'%2Fu%2Fapps%2F{{ app.name }}%2F%5C*!'%20AND%20response:304')))))),schema:segment,type:filters),(params:(),schema:metric,type:count)),params:(addLegend:!t,addTooltip:!t,mode:stacked,shareYAxis:!t,spyPerPage:10),type:histogram))" height="1000" width="90%"></iframe>
                 </div>
             </div>
@@ -72,6 +71,7 @@
             alert("Failed to delete app.");
         });
     });
+
     $(document).ready(function(){
         $.getJSON("http://mc18.cs.purdue.edu:17990/stats?appid={{app.container_id}}",function(result)
 	    {
