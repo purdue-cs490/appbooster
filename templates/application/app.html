@@ -9,17 +9,17 @@
 
 {% block content %}
 
-<!--<script>-->
-<!--$(document).ready(function(){-->
-    <!--$.getJSON("http://mc18.cs.purdue.edu:17990/stats?appid={{app.container_id}}",function(result)-->
-	<!--{-->
-			<!--var cpu_percent = +result.stats.cpu.cpuacct.stat_percent;-->
-            <!--var mem_bytes =   +result.stats.memory.memsw.usage_in_bytes;-->
-            <!--$(".appname").append(" <h4>CPU Usage: " + cpu_percent.toFixed(3)+ "% Mem Usage: " -->
-                   <!--+  mem_bytes/1024 + "KB</h4>");-->
-	<!--});-->
-<!--});-->
-<!--</script>-->
+<script>
+$(document).ready(function(){
+    $.getJSON("http://mc18.cs.purdue.edu:17990/stats?appid={{app.container_id}}",function(result)
+	{
+		var cpu_percent = +result.stats.cpu.cpuacct.stat_percent;
+                var mem_bytes = +result.stats.memory.memsw.usage_in_bytes;
+                var ss = " <h4>CPU: " + cpu_percent.toFixed(4) + "% Mem: " + mem_bytes/1024 + "KB</h4>";
+                document.getElementById("cpustat").innerHTML = ss;
+	});
+});
+</script>
 
 <div class="unit">
     <legend><h2><div class="appname">{{ app.name }}</div></h2></legend>
@@ -61,6 +61,7 @@
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="appusage">
+                <p id="cpustat">{{app.container_id}}cpustat</p>
                     <!-- <canvas data-processing-sources="{% static "js/STable.pde" %} {% static "js/Thumbnail.pde" %} {% static "js/Integrator.pde" %} {% static "js/Statgraphs.pde" %}" height=600 width=800></canvas> -->
                     <iframe src="http://mc18.cs.purdue.edu:5601/#/visualize/edit/200v304?embed&_g=(time:(from:now-7d,mode:quick,to:now))&_a=(query:(query_string:(query:'*')),vis:(aggs:!((params:(filters:!(('$$hashKey':'02E',input:(query:(query_string:(query:'path:!'%2Fu%2Fapps%2F{{ app.name }}%2F%5C*!'%20AND%20response:200')))),('$$hashKey':'02F',input:(query:(query_string:(query:'path:!'%2Fu%2Fapps%2F{{ app.name }}%2F%5C*!'%20AND%20response:304')))))),schema:segment,type:filters),(params:(),schema:metric,type:count)),params:(addLegend:!t,addTooltip:!t,mode:stacked,shareYAxis:!t,spyPerPage:10),type:histogram))" height="1000" width="90%"></iframe>
                 </div>
