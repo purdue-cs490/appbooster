@@ -55,8 +55,10 @@
                     </div>
                     <div class="alert alert-info" style="text-align:left">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <p><b>How to deploy:</b></p>
-                        <p>Copy the git url and add it to your local git remote!</p>
+                        <p><b>Add to local repo:</b></p>
+                        <p>git remote add {{ app.name }} {{ app.git_repo }}</p>
+                        <p><b>Deploy local branch:</b></p>
+                        <p>git push {{ app.name }} (branch_name):master</p>
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="appusage">
