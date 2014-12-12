@@ -11,7 +11,7 @@
 
 <script>
 $(document).ready(function(){
-	$.getJSON("http://mc18.cs.purdue.edu:17990/stats?appid=52",function(result)
+    $.getJSON("http://mc18.cs.purdue.edu:17990/stats?appid={{app.container_id}}",function(result)
 	{
 		    var cpu_percent = +result.stats.cpu.cpuacct.stat_percent;
             var mem_bytes =   +result.stats.memory.memsw.usage_in_bytes;
@@ -43,9 +43,11 @@ $(document).ready(function(){
                             <h3 class="info-label">Git URL:</h3>
                         </div>
                         <div class="span10 info-bloc">
-                            <h3 class="info-label"><a href="{{ app.app_url }}">{{ app.app_url }}</a>
+                            <h3 class="info-label">
                             {% if not app.container_id %}
                             (Not deployed yet)
+                            {% else %}
+                            <a href="{{ app.app_url }}">{{ app.app_url }}</a>
                             {% endif %}
                             </h3>
                             <h3 class="info-label">{{ app.git_repo }}</a></h3>
