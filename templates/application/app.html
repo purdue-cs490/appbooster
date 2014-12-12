@@ -11,7 +11,7 @@
 
 <script>
 $(document).ready(function(){
-	$.getJSON("http://mc18.cs.purdue.edu:17990/stats?appid=52",function(result)
+    $.getJSON("http://mc18.cs.purdue.edu:17990/stats?appid={{app.container_id}}",function(result)
 	{
 		    var cpu_percent = +result.stats.cpu.cpuacct.stat_percent;
             var mem_bytes =   +result.stats.memory.memsw.usage_in_bytes;
